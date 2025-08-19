@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Moffat Bay Lodge – Marina • Rooms • Dining</title>
+
+    <style>
+
+    :root {
+        /* Base colors */
+        --bg-start: #f6f9fc; /* page gradient start */
+        --bg-end: #eef2f7;   /* page gradient end */
+        --text: #0f172a;     /* slate-900 */
+        --text-muted: #475569; /* slate-600 */
+
+        /* Surfaces */
+        --surface: #ffffff;            /* cards, nav */
+        --surface-muted: #f8fafc;      /* subtle backgrounds */
+        --surface-border: #e5e7eb;     /* light borders */
+        --surface-overlay: rgba(255, 255, 255, 0.7);
+
+        /* Accents */
+        --primary-1: #0ea5e9; /* sky-500 */
+        --primary-2: #2563eb; /* indigo-600 */
+        --accent-1: #06b6d4;  /* cyan-500 */
+
+        /* Effects */
+        --shadow-1: 0 8px 24px rgba(15, 23, 42, 0.08);
+        --shadow-2: 0 20px 50px rgba(15, 23, 42, 0.10);
+        --radius-lg: 16px;
+        --radius-full: 999px;
+    }
+
+    /* Reset */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 100%);
+        color: var(--text);
+        line-height: 1.6;
+        overflow-x: hidden;
+    }
+
+    /* Nav */
+    .navbar {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        backdrop-filter: blur(14px);
+        background: var(--surface-overlay);
+        border-bottom: 1px solid var(--surface-border);
+        z-index: 1000;
+        padding: 1rem 0;
+        transition: background 0.3s ease;
+    }
+
+    .nav-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .logo {
+        font-weight: 800;
+        font-size: 1.25rem;
+        letter-spacing: 0.5px;
+        background: linear-gradient(135deg, var(--primary-1), var(--accent-1));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .nav-links {
+        list-style: none;
+        display: flex;
+        gap: 1.25rem;
+    }
+
+    .nav-links a {
+        color: var(--text);
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.95rem;
+        opacity: 0.8;
+    }
+
+    .nav-links a:hover {
+        opacity: 1;
+        color: var(--primary-2);
+    }
+
+    .cta-button {
+        background: linear-gradient(135deg, var(--primary-1), var(--primary-2));
+        border: none;
+        padding: 0.6rem 1.1rem;
+        border-radius: var(--radius-full);
+        color: #fff;
+        font-weight: 700;
+        text-decoration: none;
+        box-shadow: var(--shadow-1);
+    }
+
+    .mobile-menu {
+        display: none;
+        flex-direction: column;
+        gap: 4px;
+        cursor: pointer;
+    }
+
+    .mobile-menu span {
+        width: 24px;
+        height: 3px;
+        border-radius: 3px;
+        background: var(--text);
+    }
+
+    /* Hero */
+    .hero {
+        padding-top: 88px;
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+        position: relative;
+        background: linear-gradient(
+            rgba(255, 255, 255, 0.85),
+            rgba(255, 255, 255, 0.85)
+        ),
+        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="%23c7d2fe"/><stop offset="1" stop-color="%23bae6fd"/></linearGradient></defs><rect width="1200" height="800" fill="url(%23g)"/><circle cx="980" cy="160" r="120" fill="%231a8fe3" opacity="0.18"/><circle cx="260" cy="560" r="160" fill="%2306b6d4" opacity="0.14"/></svg>');
+        background-size: cover;
+        background-position: center;
+    }
+
+    .hero-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 3rem 1.5rem;
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 2rem;
+        align-items: center;
+    }
+
+    .hero h1 {
+        font-size: clamp(2.1rem, 4.5vw, 3.25rem);
+        font-weight: 900;
+        line-height: 1.15;
+        color: var(--text);
+    }
+
+    .hero p {
+        margin-top: 1rem;
+        color: var(--text-muted);
+        font-size: 1.05rem;
+        max-width: 58ch;
+    }
+
+    /* Sections */
+    .section {
+        padding: 5rem 0;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+    }
+
+    .eyebrow {
+        text-transform: uppercase;
+        font-weight: 800;
+        letter-spacing: 0.14em;
+        font-size: 0.85rem;
+        color: var(--primary-2);
+    }
+
+    .section h2 {
+        font-size: clamp(1.8rem, 3.2vw, 2.5rem);
+        font-weight: 900;
+        margin-top: 0.35rem;
+        color: var(--text);
+    }
+
+    .section p.lead {
+        color: var(--text-muted);
+        max-width: 75ch;
+        margin-top: 0.75rem;
+    }
+
+    /* Cards */
+    .card {
+        background: var(--surface);
+        border: 1px solid var(--surface-border);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: var(--shadow-1);
+    }
+
+    .card:hover {
+        transform: translateY(-6px);
+        box-shadow: var(--shadow-2);
+    }
+
+    .card-img {
+        height: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(45deg, #c7d2fe, #bae6fd);
+        color: var(--text);
+        font-weight: 800;
+    }
+
+    .card-body {
+        padding: 1.25rem;
+    }
+
+    .card-title {
+        font-weight: 800;
+        color: var(--primary-2);
+        margin-bottom: 0.25rem;
+    }
+
+    .kicker {
+        color: var(--text-muted);
+        font-weight: 700;
+        font-size: 0.85rem;
+        letter-spacing: 0.04em;
+    }
+
+    /* About & features */
+    .about-grid {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 1.25rem;
+        align-items: center;
+    }
+
+    .about-grid .img {
+        height: 280px;
+        border-radius: var(--radius-lg);
+        background: linear-gradient(45deg, #e0f2fe, #ccfbf1);
+        color: var(--text);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        box-shadow: var(--shadow-1);
+    }
+
+    /* Values Section */
+    .values-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+        margin-top: 2rem;
+    }
+
+    .value-card {
+        background: var(--surface);
+        border: 1px solid var(--surface-border);
+        border-radius: var(--radius-lg);
+        padding: 1.5rem;
+        text-align: center;
+        box-shadow: var(--shadow-1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .value-card:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-2);
+    }
+
+    .value-icon {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .value-card h3 {
+        color: var(--primary-2);
+        margin-bottom: 0.75rem;
+        font-weight: 800;
+    }
+
+    .value-card p {
+        color: var(--text-muted);
+        line-height: 1.6;
+    }
+
+    /* Team Section */
+    .team-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+
+    .team-member {
+        background: var(--surface);
+        border: 1px solid var(--surface-border);
+        border-radius: var(--radius-lg);
+        padding: 1.5rem;
+        text-align: center;
+        box-shadow: var(--shadow-1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .team-member:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--shadow-2);
+    }
+
+    .member-photo {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background: linear-gradient(45deg, #f0f9ff, #e0f2fe);
+        color: var(--text);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        margin: 0 auto 1rem;
+        font-size: 0.9rem;
+    }
+
+    .team-member h4 {
+        color: var(--primary-2);
+        margin-bottom: 0.25rem;
+        font-weight: 800;
+    }
+
+    .member-role {
+        color: var(--text-muted);
+        font-weight: 600;
+        font-size: 0.9rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .team-member p {
+        color: var(--text-muted);
+        line-height: 1.6;
+    }
+
+    /* Footer */
+    footer {
+        padding: 3rem 0;
+        background: var(--surface-muted);
+        margin-top: 3rem;
+        border-top: 1px solid var(--surface-border);
+    }
+
+    .foot-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr;
+        gap: 1.25rem;
+    }
+
+    .muted {
+        color: var(--text-muted);
+    }
+
+    .sub {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 0.75rem;
+    }
+
+    .sub input {
+        flex: 1;
+        padding: 0.8rem 0.9rem;
+        border-radius: 12px;
+        border: 1px solid var(--surface-border);
+        background: var(--surface);
+        color: var(--text);
+    }
+
+    .sub button {
+        padding: 0.8rem 1rem;
+        border-radius: 12px;
+        border: none;
+        background: linear-gradient(135deg, var(--primary-1), var(--primary-2));
+        color: #fff;
+        font-weight: 800;
+        box-shadow: var(--shadow-1);
+    }
+
+    /* Responsive */
+    @media (max-width: 980px) {
+        .hero-inner {
+            grid-template-columns: 1fr;
+        }
+
+        .booking {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .foot-grid,
+        .about-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .values-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .team-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .nav-links {
+            display: none;
+        }
+
+        .mobile-menu {
+            display: flex;
+        }
+    }
+</style>
+</head>
+
+<body>
+<!-- Nav -->
+    <nav class="navbar">
+        <div class="nav-container">
+        <div class="logo">Moffat Bay Marina & Lodge</div>
+
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="attractions.html">Attractions</a></li>
+            <li><a href="rooms.html">Reservations</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="registration.html">Registration</a></li>
+        </ul>
+
+        <div class="mobile-menu" id="menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <a class="cta-button" href="rooms.html">Book Now</a>
+        </div>
+    </nav>
+
+<!-- About Us -->
+    <header class="hero" id="about">
+    <div class="hero-inner">
+        <div>
+        <div class="eyebrow">About Us</div>
+        <h1>
+            A new chapter begins on Joviedsa Island.
+        </h1>
+        <p>
+            Welcome to Moffat Bay Marina & Lodge, a groundbreaking resort and marina project 
+            on the pristine shores of Joviedsa Island in Washington State's San Juan Islands. 
+            After six months of development, we're nearly ready to welcome our first guests 
+            to this extraordinary waterfront destination.
+        </p>
+        </div>
+
+<!-- About Us card -->
+    <div class="card">
+        <div class="card-img">ABOUT IMAGE</div>
+        <div class="card-body">
+            <div class="kicker">Waterfront Paradise</div>
+            <div class="card-title">Moffat Bay Lodge</div>
+            <p class="muted">
+                Wake to sunrises over the bay, unwind under starlit skies, and
+                start a new adventure each day.
+            </p>
+        </div>
+        </div>
+    </div>
+    </header>
+
+    <!-- Our Story Section -->
+    <section class="section" style="background: var(--surface-muted); padding: 4rem 0;">
+    <div class="container">
+        <div class="about-grid">
+        <div>
+            <div class="eyebrow">Our Story</div>
+            <h2>A Vision Realized on Joviedsa Island</h2>
+            <p class="lead">
+                The Moffat Bay Marina & Lodge project represents a collaborative vision between the San Juan Islands 
+                First Nations Development Committee and forward-thinking developers committed to sustainable island tourism.
+            </p>
+            <p>
+                Six months ago, the First Nations Development Committee approved this ambitious resort and marina project, 
+                recognizing the potential to create a world-class destination that honors the island's natural beauty and 
+                cultural heritage while providing economic opportunities for the local community.
+            </p>
+            <p>
+                Today, as construction nears completion, we stand ready to open a new chapter in Pacific Northwest hospitality, 
+                offering visitors an authentic island experience that celebrates the unique character of Joviedsa Island 
+                and the San Juan Islands archipelago.
+            </p>
+        </div>
+        <div class="img">CONSTRUCTION IMAGE</div>
+        </div>
+    </div>
+    </section>
+
+    <!-- Our Values Section -->
+    <section class="section" style="padding: 4rem 0;">
+    <div class="container">
+        <div class="eyebrow">Our Values</div>
+            <h2>What Makes Us Different</h2>
+            <p class="lead">
+                We're guided by principles that ensure every guest experiences the authentic spirit of Joviedsa Island 
+                and the San Juan Islands, while respecting the cultural heritage of the First Nations communities.
+            </p>
+        
+        <div class="values-grid">
+            <div class="value-card">
+            <div class="value-icon">🌿</div>
+                <h3>Sustainability First</h3>
+                <p>
+                    We're committed to preserving the pristine beauty of Joviedsa Island and Moffat Bay through eco-friendly practices, 
+                    renewable energy, and responsible tourism initiatives that protect the island's delicate ecosystem.
+                </p>
+            </div>
+
+            <div class="value-card">
+            <div class="value-icon">🏠</div>
+                <h3>Cultural Partnership</h3>
+                <p>
+                    We honor our partnership with the San Juan Islands First Nations Development Committee, 
+                    creating authentic experiences that celebrate and respect the island's indigenous heritage.
+                </p>
+            </div>
+
+            <div class="value-card">
+            <div class="value-icon">🌊</div>
+                <h3>Island Adventure</h3>
+                <p>
+                    From guided fishing expeditions to kayak tours around Joviedsa Island, we believe in creating opportunities 
+                    for guests to connect with the unique marine environment and discover the natural wonders of the San Juan Islands.
+                </p>
+            </div>
+
+            <div class="value-card">
+            <div class="value-icon">🌟</div>
+                <h3>Excellence in Service</h3>
+                <p>
+                    Our dedicated team goes above and beyond to ensure every detail of your stay exceeds expectations, 
+                    from personalized island recommendations to thoughtful amenities that showcase the best of Joviedsa Island.
+                </p>
+            </div>
+        </div>
+    </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="section" style="background: var(--surface-muted); padding: 4rem 0;">
+    <div class="container">
+        <div class="eyebrow">Meet Our Team</div>
+            <h2>The People Behind Your Perfect Island Stay</h2>
+            <p class="lead">
+                Our passionate team of hospitality professionals, outdoor enthusiasts, and local island experts 
+                work together to create unforgettable experiences that showcase the magic of Joviedsa Island.
+            </p>
+        
+        <div class="team-grid">
+            <div class="team-member">
+            <div class="member-photo">TEAM PHOTO 1</div>
+                <h4>Sarah Moffat</h4>
+            <div class="member-role">General Manager</div>
+                <p>Sarah leads our operations with 15+ years of hospitality experience and a deep love for island life in the San Juan Islands.</p>
+            </div>
+
+            <div class="team-member">
+            <div class="member-photo">TEAM PHOTO 2</div>
+                <h4>Mike Chen</h4>
+            <div class="member-role">Marina Director</div>
+                <p>Mike ensures our marina operations run smoothly and helps guests plan their perfect day exploring the waters around Joviedsa Island.</p>
+            </div>
+
+            <div class="team-member">
+            <div class="member-photo">TEAM PHOTO 3</div>
+                <h4>Emma Rodriguez</h4>
+            <div class="member-role">Head Chef</div>
+            <p>Emma brings the flavors of the San Juan Islands to life at Lighthouse Landing, creating memorable dining experiences with fresh, seasonal ingredients sourced from local island producers.</p>
+        </div>
+        </div>
+    </div>
+    </section>
+
+    <!-- Community & Local Impact -->
+    <section class="section" style="padding: 4rem 0;">
+    <div class="container">
+        <div class="about-grid">
+            <div class="img">COMMUNITY IMAGE</div>
+            <div>
+            <div class="eyebrow">Community & Impact</div>
+                <h2>Honoring Joviedsa Island & First Nations Heritage</h2>
+                <p class="lead">
+                    We believe in being good stewards of both our natural environment and the cultural heritage that makes Joviedsa Island special.
+                </p>
+                <p>
+                    Through our partnership with the San Juan Islands First Nations Development Committee, we support cultural preservation initiatives and 
+                    sustainable tourism practices that honor the island's indigenous heritage. Our annual "Island Heritage Day" brings together guests, staff, 
+                    and community members to celebrate and preserve the unique cultural traditions of the region.
+                </p>
+                <p>
+                    We're proud to source ingredients from local island farmers and fishermen, supporting the regional economy 
+                    while providing guests with the freshest, most authentic flavors of the San Juan Islands.
+                </p>
+                <a class="cta-button" href="attractions.html" style="margin-top: 1rem; display: inline-block">Learn About Our Initiatives</a>
+            </div>
+        </div>
+    </div>
+    </section>
+
+<!-- Footer -->
+    <footer>
+    <div class="container foot-grid">
+        <div>
+        <h3>Moffat Bay Marina & Lodge</h3>
+        <p class="muted">
+            Join our mailing list to receive updates and special discounts.
+        </p>
+        <div class="sub">
+            <input type="email" placeholder="Enter your email" aria-label="Email" />
+            <button type="button">Subscribe</button>
+        </div>
+        </div>
+
+        <div>
+        <h4>Learn More</h4>
+        <ul style="list-style: none; margin-top: 0.5rem; display: grid; gap: 0.35rem">
+            <li><a href="about.html" class="muted">About Us</a></li>
+            <li><a href="attractions.html" class="muted">Attractions</a></li>
+            <li><a href="rooms.html" class="muted">Accommodations</a></li>
+        </ul>
+        </div>
+
+        <div>
+        <h4>Useful</h4>
+        <ul style="list-style: none; margin-top: 0.5rem; display: grid; gap: 0.35rem">
+            <li><a href="index.html" class="muted">Home</a></li>
+            <li><a href="rooms.html" class="muted">Reservations</a></li>
+            <li><a href="login.html" class="muted">Login</a></li>
+        </ul>
+        </div>
+    </div>
+
+    <div class="container" style="margin-top: 1.25rem">
+        <p class="muted" style="font-size: 0.9rem">
+            © 2025 Moffat Bay Lodge
+        </p>
+    </div>
+    </footer>
+</body>
+</html>
