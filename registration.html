@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Moffat Bay Lodge – Registration</title>
+
+    <style>
+    :root {
+        /* Base colors */
+        --bg-start: #f6f9fc; /* page gradient start */
+        --bg-end: #eef2f7;   /* page gradient end */
+        --text: #0f172a;     /* slate-900 */
+        --text-muted: #475569; /* slate-600 */
+
+        /* Surfaces */
+        --surface: #ffffff;            /* cards, nav */
+        --surface-muted: #f8fafc;      /* subtle backgrounds */
+        --surface-border: #e5e7eb;     /* light borders */
+        --surface-overlay: rgba(255, 255, 255, 0.7);
+
+        /* Accents */
+        --primary-1: #0ea5e9; /* sky-500 */
+        --primary-2: #2563eb; /* indigo-600 */
+        --accent-1: #06b6d4;  /* cyan-500 */
+
+        /* Effects */
+        --shadow-1: 0 8px 24px rgba(15, 23, 42, 0.08);
+        --shadow-2: 0 20px 50px rgba(15, 23, 42, 0.10);
+        --radius-lg: 16px;
+        --radius-full: 999px;
+        
+        /* Form specific colors */
+        --error: #ef4444;
+        --success: #10b981;
+        --warning: #f59e0b;
+    }
+
+    /* Reset */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 100%);
+        color: var(--text);
+        line-height: 1.6;
+        overflow-x: hidden;
+        min-height: 100vh;
+    }
+
+    /* Nav */
+    .navbar {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        backdrop-filter: blur(14px);
+        background: var(--surface-overlay);
+        border-bottom: 1px solid var(--surface-border);
+        z-index: 1000;
+        padding: 1rem 0;
+        transition: background 0.3s ease;
+    }
+
+    .nav-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .logo {
+        font-weight: 800;
+        font-size: 1.25rem;
+        letter-spacing: 0.5px;
+        background: linear-gradient(135deg, var(--primary-1), var(--accent-1));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .nav-links {
+        list-style: none;
+        display: flex;
+        gap: 1.25rem;
+    }
+
+    .nav-links a {
+        color: var(--text);
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 0.95rem;
+        opacity: 0.8;
+    }
+
+    .nav-links a:hover {
+        opacity: 1;
+        color: var(--primary-2);
+    }
+
+    .cta-button {
+        background: linear-gradient(135deg, var(--primary-1), var(--primary-2));
+        border: none;
+        padding: 0.6rem 1.1rem;
+        border-radius: var(--radius-full);
+        color: #fff;
+        font-weight: 700;
+        text-decoration: none;
+        box-shadow: var(--shadow-1);
+    }
+
+    /* Registration Form */
+    .registration-container {
+        padding-top: 120px;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 120px 1.5rem 2rem;
+    }
+
+    .registration-card {
+        background: var(--surface);
+        border: 1px solid var(--surface-border);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-2);
+        padding: 2.5rem;
+        width: 100%;
+        max-width: 600px;
+        backdrop-filter: blur(16px);
+    }
+
+    .registration-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .registration-header h1 {
+        font-size: 2rem;
+        font-weight: 900;
+        color: var(--text);
+        margin-bottom: 0.5rem;
+    }
+
+    .registration-header p {
+        color: var(--text-muted);
+        font-size: 1rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+
+    .form-label {
+        display: block;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--text);
+        margin-bottom: 0.5rem;
+        letter-spacing: 0.3px;
+    }
+
+    .form-input {
+        width: 100%;
+        padding: 0.9rem 1rem;
+        border-radius: 12px;
+        border: 2px solid var(--surface-border);
+        background: var(--surface-muted);
+        color: var(--text);
+        outline: none;
+        font-size: 1rem;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .form-input:focus {
+        border-color: var(--primary-1);
+        box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+    }
+
+    .form-input.error {
+        border-color: var(--error);
+    }
+
+    .form-input.success {
+        border-color: var(--success);
+    }
+
+    .form-input.warning {
+        border-color: var(--warning);
+    }
+
+    .form-help {
+        font-size: 0.8rem;
+        margin-top: 0.25rem;
+        color: var(--text-muted);
+    }
+
+    .form-error {
+        font-size: 0.8rem;
+        margin-top: 0.25rem;
+        color: var(--error);
+        display: none;
+    }
+
+    .form-error.show {
+        display: block;
+    }
+
+    .password-strength {
+        margin-top: 0.5rem;
+        padding: 0.75rem;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        font-weight: 500;
+    }
+
+    .password-strength.weak {
+        background: rgba(239, 68, 68, 0.1);
+        color: var(--error);
+        border: 1px solid rgba(239, 68, 68, 0.2);
+    }
+
+    .password-strength.medium {
+        background: rgba(245, 158, 11, 0.1);
+        color: var(--warning);
+        border: 1px solid rgba(245, 158, 11, 0.2);
+    }
+
+    .password-strength.strong {
+        background: rgba(16, 185, 129, 0.1);
+        color: var(--success);
+        border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+
+    .submit-btn {
+        width: 100%;
+        padding: 1rem 1.5rem;
+        border: none;
+        border-radius: var(--radius-full);
+        font-weight: 800;
+        font-size: 1.1rem;
+        cursor: pointer;
+        background: linear-gradient(135deg, var(--primary-1), var(--primary-2));
+        color: #fff;
+        box-shadow: var(--shadow-1);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        margin-top: 1rem;
+    }
+
+    .submit-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-2);
+    }
+
+    .submit-btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+    }
+
+    .login-link {
+        text-align: center;
+        margin-top: 1.5rem;
+        color: var(--text-muted);
+    }
+
+    .login-link a {
+        color: var(--primary-2);
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+    .login-link a:hover {
+        text-decoration: underline;
+    }
+
+    /* Footer */
+    footer {
+        padding: 3rem 0;
+        background: var(--surface-muted);
+        margin-top: 3rem;
+        border-top: 1px solid var(--surface-border);
+    }
+    
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+    }
+
+    .foot-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr;
+        gap: 1.25rem;
+    }
+
+    .muted {
+        color: var(--text-muted);
+    }
+
+    .sub {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 0.75rem;
+    }
+
+    .sub input {
+        flex: 1;
+        padding: 0.8rem 0.9rem;
+        border-radius: 12px;
+        border: 1px solid var(--surface-border);
+        background: var(--surface);
+        color: var(--text);
+    }
+
+    .sub button {
+        padding: 0.8rem 1rem;
+        border-radius: 12px;
+        border: none;
+        background: linear-gradient(135deg, var(--primary-1), var(--primary-2));
+        color: #fff;
+        font-weight: 800;
+        box-shadow: var(--shadow-1);
+    }
+
+    /* Responsive */
+    @media (max-width: 980px) {
+        .registration-card {
+        padding: 2rem 1.5rem;
+        }
+
+        .form-row {
+        grid-template-columns: 1fr;
+        }
+
+        .registration-header h1 {
+        font-size: 1.75rem;
+        }
+        
+        .nav-links {
+        display: none;
+        }
+
+        .mobile-menu {
+            display: flex;
+        }
+    }
+    </style>
+</head>
+
+<body>
+    <!-- Nav -->
+    <nav class="navbar">
+        <div class="nav-container">
+        <div class="logo">Moffat Bay Marina & Lodge</div>
+
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="attractions.html">Attractions</a></li>
+            <li><a href="rooms.html">Reservations</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="registration.html">Registration</a></li>
+        </ul>
+
+        <a class="cta-button" href="registration.html">Register Now</a>
+        </div>
+    </nav>
+
+    <!-- Registration Form -->
+    <div class="registration-container" id="registration">
+        <div class="registration-card">
+        <div class="registration-header">
+            <h1>Create Your Account</h1>
+            <p>Join Moffat Bay Marina & Lodge and start your adventure today</p>
+        </div>
+
+        <form id="registrationForm" novalidate>
+            <div class="form-row">
+            <div class="form-group">
+                <label for="firstName" class="form-label">First Name *</label>
+                <input
+                type="text"
+                id="firstName"
+                name="firstName"
+                class="form-input"
+                required
+                minlength="2"
+                maxlength="50"
+            />
+            <div class="form-error" id="firstNameError">First name is required and must be at least 2 characters</div>
+            </div>
+
+            <div class="form-group">
+              <label for="lastName" class="form-label">Last Name *</label>
+                <input
+                type="text"
+                id="lastName"
+                name="lastName"
+                class="form-input"
+                required
+                minlength="2"
+                maxlength="50"
+            />
+            <div class="form-error" id="lastNameError">Last name is required and must be at least 2 characters</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="email" class="form-label">Email Address (Username) *</label>
+            <input
+                type="email"
+                id="email"
+                name="email"
+                class="form-input"
+                required
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+            />
+            <div class="form-help">This will be your username for logging in</div>
+            <div class="form-error" id="emailError">Please enter a valid email address</div>
+        </div>
+
+        <div class="form-group">
+            <label for="telephone" class="form-label">Telephone *</label>
+            <input
+                type="tel"
+                id="telephone"
+                name="telephone"
+                class="form-input"
+                required
+                pattern="[\+]?[0-9\s\-\(\)]{10,}"
+            />
+            <div class="form-help">Format: (555) 123-4567 or +1-555-123-4567</div>
+            <div class="form-error" id="telephoneError">Please enter a valid telephone number</div>
+        </div>
+
+        <div class="form-group">
+            <label for="password" class="form-label">Password *</label>
+            <input
+                type="password"
+                id="password"
+                name="password"
+                class="form-input"
+                required
+                minlength="8"
+            />
+            <div class="form-help">Minimum 8 characters with at least one uppercase, one lowercase, and one number</div>
+            <div class="password-strength" id="passwordStrength"></div>
+            <div class="form-error" id="passwordError">Password must meet security requirements</div>
+        </div>
+
+        <div class="form-group">
+            <label for="confirmPassword" class="form-label">Confirm Password *</label>
+            <input
+                type="password"
+                id="confirmPassword"
+                name="confirmPassword"
+                class="form-input"
+                required
+            />
+            <div class="form-error" id="confirmPasswordError">Passwords do not match</div>
+        </div>
+
+        <button type="submit" class="submit-btn" id="submitBtn">
+            Create Account
+        </button>
+        </form>
+
+        <div class="login-link">
+            Already have an account? <a href="#">Sign in here</a>
+        </div>
+        </div>
+    </div>
+
+<!-- Footer -->
+<footer>
+    <div class="container foot-grid">
+        <div>
+        <h3>Moffat Bay Marina & Lodge</h3>
+        <p class="muted">
+            Join our mailing list to receive updates and special discounts.
+        </p>
+        <div class="sub">
+            <input type="email" placeholder="Enter your email" aria-label="Email" />
+            <button type="button">Subscribe</button>
+        </div>
+        </div>
+
+        <div>
+        <h4>Learn More</h4>
+        <ul style="list-style: none; margin-top: 0.5rem; display: grid; gap: 0.35rem">
+            <li><a href="about.html" class="muted">About Us</a></li>
+            <li><a href="attractions.html" class="muted">Attractions</a></li>
+            <li><a href="rooms.html" class="muted">Accommodations</a></li>
+        </ul>
+        </div>
+
+        <div>
+        <h4>Useful</h4>
+        <ul style="list-style: none; margin-top: 0.5rem; display: grid; gap: 0.35rem">
+            <li><a href="index.html" class="muted">Home</a></li>
+            <li><a href="rooms.html" class="muted">Reservations</a></li>
+            <li><a href="login.html" class="muted">Login</a></li>
+        </ul>
+        </div>
+    </div>
+
+    <div class="container" style="margin-top: 1.25rem">
+        <p class="muted" style="font-size: 0.9rem">
+            © 2025 Moffat Bay Lodge
+        </p>
+    </div>
+    </footer>
+</body>
+</html>
