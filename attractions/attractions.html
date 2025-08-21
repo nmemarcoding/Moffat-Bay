@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Attractions - Moffat Bay Marina & Lodge</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #f9f9f9;
+        color: #333;
+      }
+
+      /* Navigation Bar */
+      .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 60px;
+        background-color: #fff;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
+
+      .navbar .logo {
+        font-weight: bold;
+        font-size: 18px;
+        color: #004aad;
+        text-decoration: none;
+      }
+
+      .navbar nav {
+        flex: 1;
+        text-align: center;
+      }
+
+      .navbar nav a {
+        margin: 0 15px;
+        text-decoration: none;
+        color: #333;
+        font-size: 16px;
+      }
+
+      .navbar nav a:hover {
+        color: #004aad;
+      }
+
+      .navbar .book-btn {
+        background: linear-gradient(90deg, #004aad, #0a66c2);
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 25px;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        text-decoration: none;
+        display: inline-block;
+      }
+
+      .navbar .book-btn:hover {
+        opacity: 0.9;
+      }
+
+      /* Page Header */
+      .page-header {
+        text-align: center;
+        padding: 30px 20px 20px;
+        background: linear-gradient(90deg, #004aad, #0a66c2);
+        color: #fff;
+      }
+
+      .page-header h1 {
+        font-size: 36px;
+        margin: 0;
+      }
+
+      .page-header p {
+        font-size: 18px;
+        margin-top: 10px;
+      }
+
+      /* Intro Section */
+      .intro {
+        max-width: 900px;
+        margin: 40px auto;
+        text-align: center;
+        padding: 0 20px;
+      }
+
+      .intro h2 {
+        color: #004aad;
+        font-size: 28px;
+        margin-bottom: 10px;
+      }
+
+      .intro p {
+        font-size: 16px;
+        color: #555;
+        line-height: 1.6;
+      }
+
+      /* Highlight Section */
+      .highlights {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        flex-wrap: wrap;
+        margin: 50px auto;
+        max-width: 1000px;
+        padding: 0 20px;
+      }
+
+      .highlight {
+        flex: 1 1 200px;
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        padding: 20px;
+        text-align: center;
+        transition: transform 0.3s;
+      }
+
+      .highlight:hover {
+        transform: scale(1.05);
+      }
+
+      .highlight h3 {
+        color: #004aad;
+        margin-bottom: 10px;
+      }
+
+      .highlight p {
+        font-size: 14px;
+        color: #555;
+      }
+
+      /* Attractions Section */
+      .attractions {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        padding: 40px;
+        flex-wrap: wrap;
+      }
+
+      .attraction {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        text-align: center;
+        cursor: pointer;
+        flex: 1 1 200px;
+        max-width: 250px;
+        transition: transform 0.3s;
+      }
+
+      .attraction:hover {
+        transform: scale(1.05);
+      }
+
+      .attraction img {
+        width: 100%;
+        height: 180px; 
+        object-fit: cover; 
+        border-top-left-radius: 12px;
+        border-top-right-radius: 12px;
+      }
+
+      .attraction h3 {
+        margin: 15px 0 10px;
+        color: #004aad;
+      }
+
+      /* Modal Styles */
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 2000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background: rgba(0, 0, 0, 0.6);
+        justify-content: center;
+        align-items: center;
+      }
+
+      .modal-content {
+        background: #fff;
+        border-radius: 12px;
+        padding: 20px;
+        width: 90%;
+        max-width: 600px;
+        position: relative;
+        animation: slideDown 0.3s ease-out;
+      }
+
+      @keyframes slideDown {
+        from {
+          transform: translateY(-50px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      .modal-content img {
+        width: 100%;
+        border-radius: 12px;
+      }
+
+      .modal-content h3 {
+        color: #004aad;
+        margin-top: 15px;
+      }
+
+      .modal-content p {
+        margin: 8px 0;
+        font-size: 14px;
+        color: #555;
+      }
+
+      .close-btn {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        font-size: 24px;
+        font-weight: bold;
+        color: #333;
+        cursor: pointer;
+      }
+
+      /* Call-to-action Section */
+      .cta {
+        background: #004aad;
+        color: #fff;
+        text-align: center;
+        padding: 50px 20px;
+      }
+
+      .cta h2 {
+        margin-bottom: 20px;
+        font-size: 28px;
+      }
+
+      .cta a {
+        display: inline-block;
+        background: #fff;
+        color: #004aad;
+        padding: 12px 30px;
+        border-radius: 25px;
+        font-weight: bold;
+        text-decoration: none;
+        transition: opacity 0.3s;
+      }
+
+      .cta a:hover {
+        opacity: 0.9;
+      }
+
+      .site-footer {
+        background: #f8fafc; 
+        padding: 40px 20px;
+        border-top: 1px solid #e5e7eb;
+        font-family: Arial, sans-serif;
+      }
+
+      .footer-container {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr;
+        gap: 40px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .footer-brand h3 {
+        margin: 0 0 10px;
+      }
+
+      .footer-brand p {
+        margin: 0 0 15px;
+        color: #374151;
+      }
+
+      .newsletter-form {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 15px;
+      }
+
+      .newsletter-form input {
+        flex: 1;
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid #d1d5db;
+      }
+
+      .newsletter-form button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        background: linear-gradient(90deg, #004aad, #0a66c2);
+        color: #fff;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      .footer-links h4 {
+        margin-bottom: 10px;
+      }
+
+      .footer-links ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .footer-links li {
+        margin-bottom: 8px;
+      }
+
+      .footer-links a {
+        color: #0a66c2;
+        text-decoration: none;
+      }
+
+      .footer-links a:hover {
+        text-decoration: underline;
+      }
+
+      .copyright {
+        font-size: 14px;
+        color: #6b7280;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <header class="navbar">
+      <a href="#" class="logo">Moffat Bay Marina & Lodge</a>
+      <nav>
+        <a href="#">Home</a>
+        <a href="#">Attractions</a>
+        <a href="#">Reservations</a>
+        <a href="#">About Us</a>
+      </nav>
+      <a href="#" class="book-btn">Book Now</a>
+    </header>
+
+    <!-- Header -->
+    <section class="page-header">
+      <h1>Explore Our Attractions</h1>
+      <p>Discover exciting activities around Moffat Bay</p>
+    </section>
+
+    <!-- Introduction -->
+    <section class="intro">
+      <h2>Welcome to Moffat Bay</h2>
+      <p>
+        Nestled along the stunning Pacific Northwest coast, Moffat Bay Marina &
+        Lodge offers adventure, relaxation, and family-friendly activities for
+        everyone. From hiking trails to scenic kayaking routes, our attractions
+        make for an unforgettable stay.
+      </p>
+    </section>
+
+    <!-- Highlights -->
+    <section class="highlights">
+      <div class="highlight">
+        <h3>Family-Friendly</h3>
+        <p>Activities suitable for all ages, from kids to grandparents.</p>
+      </div>
+      <div class="highlight">
+        <h3>Scenic Views</h3>
+        <p>Experience breathtaking landscapes and coastal beauty.</p>
+      </div>
+      <div class="highlight">
+        <h3>On-Site Amenities</h3>
+        <p>Marina access, rental equipment, and guided tours available.</p>
+      </div>
+    </section>
+
+    <!-- Attractions Section -->
+    <section class="attractions">
+      <div
+        class="attraction"
+        data-title="Hiking"
+  data-img="../images/hiking.jpg"
+        data-desc="Explore scenic trails and breathtaking views along the Pacific Northwest coast."
+        data-distance="1–5 miles from the lodge"
+        data-rates="Free"
+        data-times="Open daily, sunrise to sunset"
+      >
+  <img src="../images/hiking.jpg" alt="Hiking" />
+        <h3>Hiking</h3>
+      </div>
+
+      <div
+        class="attraction"
+        data-title="Kayaking"
+  data-img="../images/kayaking.jpg"
+        data-desc="Paddle across calm waters and experience the beauty of Moffat Bay up close."
+        data-distance="0.5 miles from the lodge"
+        data-rates="$25 per hour"
+        data-times="8:00 AM – 6:00 PM daily"
+      >
+  <img src="../images/kayaking.jpg" alt="Kayaking" />
+        <h3>Kayaking</h3>
+      </div>
+
+      <div
+        class="attraction"
+        data-title="Whale Watching"
+  data-img="../images/whale-watching.jpg"
+        data-desc="Embark on an unforgettable journey to see orcas, humpbacks, and other marine life."
+        data-distance="2 miles from the lodge"
+        data-rates="$75 per adult, $50 per child"
+        data-times="10:00 AM & 2:00 PM tours daily"
+      >
+  <img src="../images/whale-watching.jpg" alt="Whale Watching" />
+        <h3>Whale Watching</h3>
+      </div>
+
+      <div
+        class="attraction"
+        data-title="Scuba Diving"
+  data-img="../images/scuba-diving.jpg"
+        data-desc="Dive beneath the surface to explore vibrant underwater ecosystems and marine habitats."
+        data-distance="3 miles from the lodge"
+        data-rates="$120 per dive, equipment included"
+        data-times="9:00 AM – 5:00 PM, appointments required"
+      >
+  <img src="../images/scuba-diving.jpg" alt="Scuba Diving" />
+        <h3>Scuba Diving</h3>
+      </div>
+    </section>
+
+    <!-- Modal -->
+    <div class="modal" id="modal">
+      <div class="modal-content">
+        <span class="close-btn" id="closeBtn">&times;</span>
+        <img id="modalImg" src="" alt="" />
+        <h3 id="modalTitle"></h3>
+        <p id="modalDesc"></p>
+        <p><strong>Distance:</strong> <span id="modalDistance"></span></p>
+        <p><strong>Rates:</strong> <span id="modalRates"></span></p>
+        <p><strong>Times:</strong> <span id="modalTimes"></span></p>
+      </div>
+    </div>
+
+    <!-- Call to Action -->
+    <section class="cta">
+      <h2>Ready to Explore Moffat Bay?</h2>
+      <a href="#">Book Your Stay Now</a>
+    </section>
+
+    <footer class="site-footer">
+      <div class="footer-container">
+        <!-- Brand + Newsletter -->
+        <div class="footer-brand">
+          <h3>Moffat Bay Marina & Lodge</h3>
+          <p>Join our mailing list to receive updates and special discounts.</p>
+          <form class="newsletter-form">
+            <input type="email" placeholder="Enter your email" required />
+            <button type="submit">Subscribe</button>
+          </form>
+          <p class="copyright">© 2025 Moffat Bay Lodge</p>
+        </div>
+
+        <!-- Learn More -->
+        <div class="footer-links">
+          <h4>Learn More</h4>
+          <ul>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Attractions</a></li>
+            <li><a href="#">Accommodations</a></li>
+          </ul>
+        </div>
+
+        <!-- Useful -->
+        <div class="footer-links">
+          <h4>Useful</h4>
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Reservations</a></li>
+            <li><a href="#">Login</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      const attractions = document.querySelectorAll(".attraction");
+      const modal = document.getElementById("modal");
+      const closeBtn = document.getElementById("closeBtn");
+      const modalImg = document.getElementById("modalImg");
+      const modalTitle = document.getElementById("modalTitle");
+      const modalDesc = document.getElementById("modalDesc");
+      const modalDistance = document.getElementById("modalDistance");
+      const modalRates = document.getElementById("modalRates");
+      const modalTimes = document.getElementById("modalTimes");
+
+      attractions.forEach((attraction) => {
+        attraction.addEventListener("click", () => {
+          modal.style.display = "flex";
+          modalImg.src = attraction.dataset.img;
+          modalTitle.textContent = attraction.dataset.title;
+          modalDesc.textContent = attraction.dataset.desc;
+          modalDistance.textContent = attraction.dataset.distance;
+          modalRates.textContent = attraction.dataset.rates;
+          modalTimes.textContent = attraction.dataset.times;
+        });
+      });
+
+      closeBtn.addEventListener("click", () => {
+        modal.style.display = "none";
+      });
+
+      window.addEventListener("click", (e) => {
+        if (e.target === modal) {
+          modal.style.display = "none";
+        }
+      });
+    </script>
+  </body>
+</html>
