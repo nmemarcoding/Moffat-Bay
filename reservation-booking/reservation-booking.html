@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Moffat Bay – Book Your Stay</title>
+<style>
+  :root{
+    --bg-start:#f6f9fc; --bg-end:#eef2f7; --text:#0f172a; --text-muted:#475569;
+    --surface:#ffffff; --surface-muted:#f8fafc; --surface-border:#e5e7eb; --surface-overlay:rgba(255,255,255,.7);
+    --primary-1:#0ea5e9; --primary-2:#2563eb; --accent-1:#06b6d4;
+    --shadow-1:0 8px 24px rgba(15,23,42,.08); --shadow-2:0 20px 50px rgba(15,23,42,.10);
+    --radius-lg:16px; --radius-full:999px;
+    --nav-h:72px;
+  }
+  @media (max-width:980px){ :root{ --nav-h:84px; } }
+
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:Inter,system-ui,Segoe UI,Roboto,sans-serif;color:var(--text);background:linear-gradient(135deg,var(--bg-start),var(--bg-end))}
+
+  /* Fixed navbar */
+  .navbar{position:fixed;top:0;left:0;right:0;height:var(--nav-h);display:flex;align-items:center;backdrop-filter:blur(14px);background:var(--surface-overlay);border-bottom:1px solid var(--surface-border);z-index:10}
+  .nav-wrap{max-width:1200px;margin:0 auto;padding:0 1.5rem;width:100%;display:flex;align-items:center;justify-content:space-between}
+  .logo{font-weight:800;font-size:1.25rem;background:linear-gradient(135deg,var(--primary-1),var(--accent-1));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  .links{display:flex;list-style:none;gap:1.25rem}
+  .links a{color:var(--text);text-decoration:none;font-weight:600;font-size:.95rem;opacity:.85}
+  .links a:hover{opacity:1;color:var(--primary-2)}
+  .cta{background:linear-gradient(135deg,var(--primary-1),var(--primary-2));color:#fff;padding:.6rem 1.1rem;border-radius:var(--radius-full);text-decoration:none;font-weight:800;box-shadow:var(--shadow-1)}
+  @media (max-width:980px){ .links{display:none} }
+
+  /* Offset below navbar */
+  .page{padding-top:calc(var(--nav-h) + 12px)}
+
+  .hero{padding:2rem 0 1.25rem;background:linear-gradient(180deg,rgba(255,255,255,.55),rgba(255,255,255,.55)),radial-gradient(600px 280px at 85% 8%,rgba(37,99,235,.12),transparent 60%),radial-gradient(700px 320px at 15% 80%,rgba(14,165,233,.14),transparent 60%)}
+  .container{max-width:1200px;margin:0 auto;padding:0 1.5rem}
+  .eyebrow{color:var(--primary-2);text-transform:uppercase;letter-spacing:.14em;font-weight:800;font-size:.85rem}
+  h1{font-size:clamp(1.9rem,3.5vw,2.6rem);font-weight:900;margin-top:.35rem}
+
+  /* Filters – mobile-first */
+  .filters{
+    margin-top:1.25rem;
+    display:grid; grid-template-columns:1fr; gap:.9rem;
+    background:var(--surface); border:1px solid var(--surface-border);
+    border-radius:var(--radius-lg); padding:1rem; box-shadow:var(--shadow-1)
+  }
+  .field{display:flex;flex-direction:column;gap:.35rem}
+  .label{font-size:.8rem;color:var(--text-muted);font-weight:700;letter-spacing:.03em}
+  .input,.select{width:100%;padding:.9rem 1rem;border:1px solid var(--surface-border);border-radius:12px;background:var(--surface-muted);outline:none;color:var(--text)}
+  .btn{width:100%;padding:1rem 1.2rem;border:none;border-radius:var(--radius-full);font-weight:900;color:#fff;background:linear-gradient(135deg,var(--primary-1),var(--primary-2));box-shadow:var(--shadow-1);cursor:pointer}
+
+  /* Bump to 2 columns on medium screens, then 5-area layout on large */
+  @media (min-width:560px){ .filters{grid-template-columns:1fr 1fr} }
+  @media (min-width:980px){
+    .filters{grid-template-columns:repeat(4,1fr) auto; align-items:end}
+    .btn{width:auto}
+  }
+
+  .lead{color:var(--text-muted);margin-top:.9rem}
+
+  /* Rooms grid */
+  .rooms{display:grid;grid-template-columns:1fr;gap:1rem;margin-top:1.1rem}
+  @media (min-width:900px){ .rooms{grid-template-columns:1fr 1fr 1fr} }
+  @media (min-width:600px) and (max-width:899.9px){ .rooms{grid-template-columns:1fr 1fr} }
+
+  .card{background:var(--surface);border:1px solid var(--surface-border);border-radius:var(--radius-lg);box-shadow:var(--shadow-1);overflow:hidden;transition:transform .3s ease, box-shadow .3s ease}
+  .card:hover{transform:translateY(-6px);box-shadow:var(--shadow-2)}
+  .media{height:min(42vw,180px);display:flex;align-items:center;justify-content:center;background:linear-gradient(45deg,#c7d2fe,#bae6fd);font-weight:800}
+  .body{padding:1.1rem}
+  .kicker{color:var(--text-muted);font-weight:700;font-size:.85rem;letter-spacing:.04em}
+  .title{font-weight:900;color:var(--primary-2);margin:.1rem 0}
+  .price{font-weight:800;margin-top:.25rem}
+  .book{margin-top:.6rem;display:inline-block;padding:.55rem .9rem;border-radius:12px;background:linear-gradient(135deg,var(--primary-1),var(--primary-2));color:#fff;text-decoration:none;font-weight:800;box-shadow:var(--shadow-1)}
+</style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="nav-wrap">
+      <div class="logo">Moffat Bay Marina & Lodge</div>
+      <ul class="links">
+        <li><a href="#">Home</a></li><li><a href="#">Attractions</a></li><li><a href="#">Reservations</a></li><li><a href="#">About Us</a></li>
+      </ul>
+      <a class="cta" href="#">Book Now</a>
+    </div>
+  </nav>
+
+  <main class="page">
+    <section class="hero">
+      <div class="container">
+        <div class="eyebrow">Reservations</div>
+        <h1>Book Your Stay With Us</h1>
+
+        <!-- Mobile-first filters -->
+        <form class="filters">
+          <label class="field">
+            <span class="label">Check In</span>
+            <input class="input" type="date"/>
+          </label>
+          <label class="field">
+            <span class="label">Check Out</span>
+            <input class="input" type="date"/>
+          </label>
+          <label class="field">
+            <span class="label">Rooms</span>
+            <select class="select"><option>1 Room</option><option>2 Rooms</option><option>3 Rooms</option></select>
+          </label>
+          <label class="field">
+            <span class="label">Guests</span>
+            <select class="select"><option>1 Guest</option><option>2 Guests</option><option>3 Guests</option><option>4 Guests</option><option>5 Guests</option></select>
+          </label>
+          <button class="btn" type="submit">Search</button>
+        </form>
+
+        <p class="lead">Choose from our most-loved room types.</p>
+
+        <!-- Rooms -->
+        <div class="rooms">
+          <div class="card">
+            <div class="media">IMAGE</div>
+            <div class="body">
+              <div class="kicker">2–4 Guests</div>
+              <div class="title">Double Full Room</div>
+              <div class="price">$120 / night</div>
+              <a class="book" href="#">Select</a>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="media">IMAGE</div>
+            <div class="body">
+              <div class="kicker">1–2 Guests</div>
+              <div class="title">Single Queen Room</div>
+              <div class="price">$135 / night</div>
+              <a class="book" href="#">Select</a>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="media">IMAGE</div>
+            <div class="body">
+              <div class="kicker">1–2 Guests</div>
+              <div class="title">King Room</div>
+              <div class="price">$160 / night</div>
+              <a class="book" href="#">Select</a>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="media">IMAGE</div>
+            <div class="body">
+              <div class="kicker">2–5 Guests</div>
+              <div class="title">Double Queen Room</div>
+              <div class="price">$150 / night</div>
+              <a class="book" href="#">Select</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

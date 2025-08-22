@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Moffat Bay Project Overview</title>
+  <style>
+    :root { --radius: 16px; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      background: linear-gradient(135deg, #f6f8fb 0%, #eef2f7 100%);
+      color: #0f172a;
+    }
+    .wrap {
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 20px 40px;
+    }
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+      padding: 20px;
+      background: #ffffffcc;
+      border: 1px solid #e5e7eb;
+      border-radius: var(--radius);
+      backdrop-filter: blur(6px);
+    }
+    .title {
+      margin: 0;
+      font-size: clamp(20px, 2.4vw, 32px);
+      letter-spacing: -0.02em;
+    }
+    .subtitle {
+      margin: 6px 0 0;
+      color: #475569;
+      font-size: 14px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-top: 8px;
+    }
+    .card {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 18px;
+      background: #fff;
+      border: 1px solid #e5e7eb;
+      border-radius: var(--radius);
+      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+      transition: transform .15s ease, box-shadow .15s ease;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.09);
+    }
+    .chip {
+      align-self: flex-start;
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: #f1f5f9;
+      color: #334155;
+      border: 1px solid #e2e8f0;
+    }
+    .card h3 {
+      margin: 0;
+      font-size: 18px;
+    }
+    .desc {
+      margin: 0;
+      color: #64748b;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+    .actions {
+      margin-top: auto;
+      display: flex;
+      gap: 10px;
+    }
+    .btn {
+      text-decoration: none;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid #0ea5e9;
+      background: #0ea5e9;
+      color: white;
+      font-weight: 600;
+      font-size: 14px;
+      transition: filter .15s ease, transform .05s ease;
+    }
+    .btn.secondary {
+      background: transparent;
+      color: #0ea5e9;
+    }
+    .btn:active { transform: translateY(1px); }
+    footer {
+      margin-top: 28px;
+      text-align: center;
+      color: #64748b;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1 class="title">Moffat Bay Website — Page Directory</h1>
+        <p class="subtitle">Click any card to open the correct page.</p>
+      </div>
+    </header>
+
+    <section class="grid">
+      <article class="card">
+        <span class="chip">Explore</span>
+        <h3>Attractions</h3>
+        <p class="desc">Featured attractions and things to do.</p>
+        <div class="actions">
+          <a class="btn" href="attractions/attractions.html">Open</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <span class="chip">Support</span>
+        <h3>Contact Us</h3>
+        <p class="desc">Questions, feedback, or support.</p>
+        <div class="actions">
+          <a class="btn" href="contact us/contact.html">Open</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <span class="chip">Account</span>
+        <h3>Login</h3>
+        <p class="desc">Authentication for users.</p>
+        <div class="actions">
+          <a class="btn" href="login/login.html">Open</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <span class="chip">Account</span>
+        <h3>Registration</h3>
+        <p class="desc">Create your account.</p>
+        <div class="actions">
+          <a class="btn" href="registration/registration.html">Open</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <span class="chip">Reservations</span>
+  <h3>Reservation Page</h3>
+  <p class="desc">Begin a new reservation.</p>
+        <div class="actions">
+          <a class="btn" href="reservation-booking/reservation-booking.html">Open</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <span class="chip">Reservations</span>
+  <h3>Reservation Summary Page</h3>
+  <p class="desc">Review reservation details before confirming.</p>
+        <div class="actions">
+          <a class="btn" href="reservation-details/reservation-details.html">Open</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <span class="chip">Reservations</span>
+        <h3>Lookup</h3>
+        <p class="desc">Find an existing reservation.</p>
+        <div class="actions">
+          <a class="btn" href="reservation-lookup/reservation-lookup.html">Open</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <span class="chip">Start</span>
+        <h3>Landing Page</h3>
+        <p class="desc">Main intro and marketing page.</p>
+        <div class="actions">
+          <a class="btn" href="landing page/index.html">Open</a>
+        </div>
+      </article>
+
+   
+      <article class="card">
+        <span class="chip">About</span>
+        <h3>About Us</h3>
+        <p class="desc">Learn more about our mission and values.</p>
+        <div class="actions">
+          <a class="btn" href="about/about.html">Open</a>
+        </div>
+      </article>
+
+    </section>
+
+    
+  </div>
+</body>
+</html>
