@@ -84,6 +84,22 @@
     .result{grid-template-columns:1fr}
     .search-row{grid-template-columns:1fr}
   }
+
+  /* Footer */
+  .site-footer{background:#f8fafc;padding:40px 20px;border-top:1px solid #e5e7eb;font-family:Arial,sans-serif;margin-top:40px}
+  .footer-container{display:grid;grid-template-columns:2fr 1fr 1fr;gap:40px;max-width:1200px;margin:0 auto}
+  .footer-brand h3{margin:0 0 10px}
+  .footer-brand p{margin:0 0 15px;color:#374151}
+  .newsletter-form{display:flex;gap:10px;margin-bottom:15px}
+  .newsletter-form input{flex:1;padding:10px;border-radius:8px;border:1px solid #d1d5db}
+  .newsletter-form button{padding:10px 20px;border:none;border-radius:8px;background:linear-gradient(90deg,#004aad,#0a66c2);color:#fff;font-weight:bold;cursor:pointer}
+  .footer-links h4{margin-bottom:10px}
+  .footer-links ul{list-style:none;padding:0;margin:0}
+  .footer-links li{margin-bottom:8px}
+  .footer-links a{color:#0a66c2;text-decoration:none}
+  .footer-links a:hover{text-decoration:underline}
+  .copyright{font-size:14px;color:#6b7280;margin-top:10px}
+  @media (max-width:860px){ .footer-container{grid-template-columns:1fr;gap:24px} }
 </style>
 </head>
 <body>
@@ -134,5 +150,34 @@
       </div>
     </section>
   </main>
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <h3>Moffat Bay Marina & Lodge</h3>
+        <p>Join our mailing list to receive updates and special discounts.</p>
+        <form class="newsletter-form">
+          <input type="email" placeholder="Enter your email" required />
+          <button type="submit">Subscribe</button>
+        </form>
+        <p class="copyright">© 2025 Moffat Bay Lodge</p>
+      </div>
+      <div class="footer-links">
+        <h4>Learn More</h4>
+        <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Attractions</a></li>
+          <li><a href="#">Accommodations</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Useful</h4>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Reservations</a></li>
+          <li><a href="#">Login</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
 </body>
 </html>
