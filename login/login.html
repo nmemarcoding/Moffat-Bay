@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Moffat Bay Lodge – Login</title>
+
+  <style>
+    :root {
+      /* Base colors */
+      --bg-start: #f6f9fc;
+      --bg-end: #eef2f7;
+      --text: #0f172a;
+      --text-muted: #475569;
+
+      /* Surfaces */
+      --surface: #ffffff;
+      --surface-muted: #f8fafc;
+      --surface-border: #e5e7eb;
+      --surface-overlay: rgba(255, 255, 255, 0.7);
+
+      /* Accents */
+      --primary-1: #0ea5e9;
+      --primary-2: #2563eb;
+      --accent-1: #06b6d4;
+
+      /* Effects */
+      --shadow-1: 0 8px 24px rgba(15, 23, 42, 0.08);
+      --shadow-2: 0 20px 50px rgba(15, 23, 42, 0.10);
+      --radius-lg: 16px;
+      --radius-full: 999px;
+
+      /* Form states */
+      --error: #ef4444;
+    }
+
+    /* Reset */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-end) 100%);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* Nav */
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      backdrop-filter: blur(14px);
+      background: var(--surface-overlay);
+      border-bottom: 1px solid var(--surface-border);
+      z-index: 1000;
+      padding: 1rem 0;
+      transition: background 0.3s ease;
+    }
+    .nav-container {
+      max-width: 1200px; margin: 0 auto; padding: 0 1.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo {
+      font-weight: 800; font-size: 1.25rem; letter-spacing: .5px;
+      background: linear-gradient(135deg, var(--primary-1), var(--accent-1));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .nav-links { list-style: none; display: flex; gap: 1.25rem; }
+    .nav-links a {
+      color: var(--text); text-decoration: none; font-weight: 600; font-size: .95rem; opacity: .8;
+    }
+    .nav-links a:hover { opacity: 1; color: var(--primary-2); }
+    .cta-button {
+      background: linear-gradient(135deg, var(--primary-1), var(--primary-2));
+      border: none; padding: .6rem 1.1rem; border-radius: var(--radius-full);
+      color: #fff; font-weight: 700; text-decoration: none; box-shadow: var(--shadow-1);
+    }
+    @media (max-width: 980px) { .nav-links { display: none; } }
+
+    /* Login Form */
+    .login-container {
+      padding-top: 120px; /* offset for fixed nav */
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      padding: 120px 1.5rem 2rem;
+    }
+    .login-card {
+      background: var(--surface);
+      border: 1px solid var(--surface-border);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-2);
+      padding: 2.25rem;
+      width: 100%;
+      max-width: 520px;
+      backdrop-filter: blur(16px);
+    }
+    .login-header { text-align: center; margin-bottom: 1.5rem; }
+    .login-header h1 { font-size: 2rem; font-weight: 900; margin-bottom: .5rem; }
+    .login-header p { color: var(--text-muted); }
+
+    .form-group { margin-bottom: 1.1rem; }
+    .form-label {
+      display: block; font-size: .9rem; font-weight: 600; color: var(--text);
+      margin-bottom: .5rem; letter-spacing: .3px;
+    }
+    .form-input {
+      width: 100%; padding: .9rem 1rem; border-radius: 12px;
+      border: 2px solid var(--surface-border); background: var(--surface-muted);
+      color: var(--text); outline: none; font-size: 1rem;
+      transition: border-color .3s ease, box-shadow .3s ease;
+    }
+    .form-input:focus {
+      border-color: var(--primary-1);
+      box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+    }
+    .form-input.error { border-color: var(--error); }
+
+    .form-row-inline {
+      display: flex; align-items: center; justify-content: space-between; gap: .75rem;
+      margin-top: .25rem;
+    }
+    .remember {
+      display: inline-flex; align-items: center; gap: .5rem; color: var(--text-muted); font-size: .95rem;
+    }
+    .remember input { width: 18px; height: 18px; }
+    .forgot a { color: var(--primary-2); font-weight: 600; text-decoration: none; }
+    .forgot a:hover { text-decoration: underline; }
+
+    .submit-btn {
+      width: 100%;
+      padding: 1rem 1.5rem;
+      border: none; border-radius: var(--radius-full);
+      font-weight: 800; font-size: 1.05rem; cursor: pointer;
+      background: linear-gradient(135deg, var(--primary-1), var(--primary-2));
+      color: #fff; box-shadow: var(--shadow-1);
+      transition: transform .2s ease, box-shadow .2s ease;
+      margin-top: .5rem;
+    }
+    .submit-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-2); }
+    .submit-btn:disabled { opacity: .6; cursor: not-allowed; transform: none; }
+
+    .swap-link { text-align: center; margin-top: 1rem; color: var(--text-muted); }
+    .swap-link a { color: var(--primary-2); text-decoration: none; font-weight: 600; }
+    .swap-link a:hover { text-decoration: underline; }
+
+    /* Responsive */
+    @media (max-width: 980px) {
+      .login-card { padding: 2rem 1.5rem; }
+      .login-header h1 { font-size: 1.75rem; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Nav -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="logo">Moffat Bay Marina & Lodge</div>
+
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="attractions.html">Attractions</a></li>
+        <li><a href="rooms.html">Reservations</a></li>
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="registration.html">Registration</a></li>
+      </ul>
+
+      <a class="cta-button" href="registration.html">Register Now</a>
+    </div>
+  </nav>
+
+  <!-- Login Form -->
+  <div class="login-container">
+    <div class="login-card">
+      <div class="login-header">
+        <h1>Welcome Back</h1>
+        <p>Sign in to access your Moffat Bay account</p>
+      </div>
+
+      <form id="loginForm" novalidate>
+        <div class="form-group">
+          <label for="email" class="form-label">Email Address (Username) *</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            class="form-input"
+            required
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+            placeholder="you@example.com"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="password" class="form-label">Password *</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            class="form-input"
+            required
+            minlength="8"
+            placeholder="••••••••"
+          />
+        </div>
+
+        <div class="form-row-inline">
+          <label class="remember">
+            <input type="checkbox" id="remember" />
+            <span>Remember me</span>
+          </label>
+          <div class="forgot">
+            <a href="forgot-password.html">Forgot password?</a>
+          </div>
+        </div>
+
+        <button type="submit" class="submit-btn" id="signInBtn">Sign In</button>
+      </form>
+
+      <div class="swap-link">
+        Don’t have an account? <a href="registration.html">Create one</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
