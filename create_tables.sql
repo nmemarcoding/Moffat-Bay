@@ -3,7 +3,7 @@ DROP DATABASE IF EXISTS moffat_lodge;
 CREATE DATABASE moffat_lodge;
 USE moffat_lodge;
 
--- USERS (note: backtick `user` because it's a MySQL reserved word)
+-- USERS 
 CREATE TABLE `user` (
   user_id       BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   email         VARCHAR(254)    NOT NULL UNIQUE,
@@ -25,7 +25,7 @@ CREATE TABLE room (
   PRIMARY KEY (room_id)
 ) ENGINE=InnoDB;
 
--- RESERVATION (FKs: user_id -> user.user_id, room_id -> room.room_id)
+-- RESERVATION 
 CREATE TABLE reservation (
   reservation_id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   user_id        BIGINT UNSIGNED NOT NULL,
