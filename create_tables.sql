@@ -1,12 +1,10 @@
--- Drop database if it already exists
+-- Recreate database fresh (safe to run anytime)
 DROP DATABASE IF EXISTS moffat_lodge;
-
--- Create a fresh database
 CREATE DATABASE moffat_lodge;
 USE moffat_lodge;
 
--- USER table
-CREATE TABLE user (
+-- USER table 
+CREATE TABLE `user` (
   user_id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   email VARCHAR(254) NOT NULL UNIQUE,
   password_hash CHAR(60) NOT NULL,
@@ -33,6 +31,8 @@ CREATE TABLE reservation (
   check_in DATE NOT NULL,
   check_out DATE NOT NULL,
   PRIMARY KEY (reservation_id),
-  FOREIGN KEY (user_id) REFERENCES user(user_id) ON DELETE CASCADE,
-  FOREIGN KEY (room_type_id) REFERENCES room_type(room_type_id)
+  CONSTRAINT fk_res_user
+    FOREIGN KEY (user_id) REFERENCES `user`(user_id) ON DELETE CASCADE,
+  CONSTRAINT fk_res_room_type
+    FOREIGN KEY (room_type_id) REFERENCES room_type(room_type_id)
 );
