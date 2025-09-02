@@ -4,6 +4,7 @@ import com.group2.moffat_bay.model.User;
 import com.group2.moffat_bay.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -26,4 +27,13 @@ public class UserService {
         rawUser.setPassword(hashed);
         return userRepository.save(rawUser);
     }
+
+    public Optional<User> findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+    
+    public boolean checkPassword(User user, String rawPassword) {
+        return passwordEncoder.matches(rawPassword, user.getPassword());
+    }
+    
 }

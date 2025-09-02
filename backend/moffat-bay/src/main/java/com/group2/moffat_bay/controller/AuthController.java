@@ -4,26 +4,33 @@ import com.group2.moffat_bay.dto.RegistrationRequest;
 import com.group2.moffat_bay.dto.UserDto;
 import com.group2.moffat_bay.model.User;
 import com.group2.moffat_bay.service.UserService;
+import com.group2.moffat_bay.util.JwtUtil;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
 public class AuthController {
 
     private final UserService userService;
+    private final JwtUtil jwtUtil;
 
-    public AuthController(UserService userService) {
+    public AuthController(UserService userService, JwtUtil jwtUtil) {
         this.userService = userService;
+        this.jwtUtil = jwtUtil;
     }
 
+    // === REGISTER  ===
     @PostMapping("/register")
     public ResponseEntity<?> register(@Valid @RequestBody RegistrationRequest req) {
         try {
             User toCreate = new User(
                 req.getEmail(),
-                req.getPassword(),  // raw, will be hashed in service
+                req.getPassword(),  // raw; service will hash
                 req.getFirstName(),
                 req.getLastName(),
                 req.getTelephone(),
@@ -35,6 +42,36 @@ public class AuthController {
             return ResponseEntity.badRequest().body(e.getMessage());
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body("Registration failed: " + e.getMessage());
+        }
+    }
+
+    // === LOGIN ===
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody User loginRequest) {
+        try {
+            Optional<User> existing = userService.findByEmail(loginRequest.getEmail());
+            if (existing.isEmpty()) {
+                return ResponseEntity.status(404).body("User not found");
+            }
+
+            User user = existing.get();
+            if (!userService.checkPassword(user, loginRequest.getPassword())) {
+                return ResponseEntity.status(401).body("Invalid password");
+            }
+
+            // generate JWT
+            String token = jwtUtil.generateToken(user);
+
+            // attach token in Authorization header
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Authorization", "Bearer " + token);
+
+            return ResponseEntity.ok()
+                    .headers(headers)
+                    .body(new UserDto(user));
+
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("Login failed: " + e.getMessage());
         }
     }
 }
