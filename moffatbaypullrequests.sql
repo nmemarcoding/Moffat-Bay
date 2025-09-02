@@ -6,5 +6,5 @@ SHOW TABLES;
 
 -- Dump all rows from each table
 SELECT * FROM `user`;
-SELECT * FROM room_type;
+SELECT * FROM room;
 SELECT * FROM reservation;
