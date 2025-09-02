@@ -1,23 +1,35 @@
 // src/services/apiService.js
 import axios from 'axios';
 
-const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL || 'http://localhost:8080/api',
-});
+/* ---------- Constants ---------- */
 
+const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080/api';
 const AUTH_HEADER = 'Authorization';
+const TOKEN_KEY = 'authToken';
+const USER_INFO_KEY = 'userInfo';
 
-const getToken = () => localStorage.getItem('authToken');
-const setToken = (t) => localStorage.setItem('authToken', t);
-const clearToken = () => localStorage.removeItem('authToken');
+/* ---------- Storage Helpers ---------- */
+
+const getToken = () => localStorage.getItem(TOKEN_KEY);
+const setToken = (t) => localStorage.setItem(TOKEN_KEY, t);
+const clearToken = () => localStorage.removeItem(TOKEN_KEY);
+
+const safeDispatchAuthEvent = () => {
+  try {
+    window.dispatchEvent(new Event('auth-user-updated'));
+  } catch {
+    /* no-op */
+  }
+};
 
 const setUserInfo = (u) => {
-  localStorage.setItem('userInfo', JSON.stringify(u));
-  try { window.dispatchEvent(new Event('auth-user-updated')); } catch {}
+  localStorage.setItem(USER_INFO_KEY, JSON.stringify(u));
+  safeDispatchAuthEvent();
 };
+
 const clearUserInfo = () => {
-  localStorage.removeItem('userInfo');
-  try { window.dispatchEvent(new Event('auth-user-updated')); } catch {}
+  localStorage.removeItem(USER_INFO_KEY);
+  safeDispatchAuthEvent();
 };
 
 export const logout = () => {
@@ -25,6 +37,10 @@ export const logout = () => {
   clearUserInfo();
   console.log('User logged out; authToken and userInfo cleared');
 };
+
+/* ---------- Axios Instance ---------- */
+
+const api = axios.create({ baseURL: BASE_URL });
 
 // Attach token
 api.interceptors.request.use(
@@ -42,12 +58,18 @@ api.interceptors.request.use(
 // Capture refreshed token; store user on /login or /register
 api.interceptors.response.use(
   (response) => {
-    const newToken = response.headers?.authorization; // axios lowercases keys
+    // axios lowercases header keys; also support exact-case for safety
+    const newToken =
+      response.headers?.authorization ||
+      response.headers?.Authorization ||
+      null;
+
     if (newToken) setToken(newToken);
 
     const path = (response.config?.url || '').toLowerCase();
     const isAuthCall = path.endsWith('/login') || path.endsWith('/register');
-  if (isAuthCall && response.data) setUserInfo(response.data);
+
+    if (isAuthCall && response.data) setUserInfo(response.data);
 
     return response;
   },
@@ -60,7 +82,8 @@ api.interceptors.response.use(
   }
 );
 
-// --- API calls matching your model ---
+/* ---------- API Calls (matching your model) ---------- */
+
 export const register = (payload) =>
   // { email, password, firstName, lastName, telephone, isAdmin }
   api.post('/register', payload);
@@ -73,6 +96,7 @@ export const login = (payload) =>
 export const validateToken = async () => {
   const token = getToken();
   if (!token) return false;
+
   try {
     const res = await api.post('/check-token', null); // interceptor adds header
     const ok =
