@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "user") // Maps directly to the MySQL table `user`
+@Table(name = "user")
 public class User implements Serializable {
 
     @Id
@@ -15,8 +15,9 @@ public class User implements Serializable {
     @Column(name = "email", nullable = false, unique = true, length = 254)
     private String email;
 
-    @Column(name = "password_hash", nullable = false, length = 60)
-    private String passwordHash;
+    // NOTE: We store the BCRYPT HASH here, even though the column is named password
+    @Column(name = "password", nullable = false, length = 60)
+    private String password;
 
     @Column(name = "first_name", nullable = false, length = 100)
     private String firstName;
@@ -30,27 +31,26 @@ public class User implements Serializable {
     @Column(name = "is_admin", nullable = false)
     private Boolean isAdmin = false;
 
-    // ===== Constructors =====
     public User() {}
 
-    public User(String email, String passwordHash, String firstName, String lastName, String telephone, Boolean isAdmin) {
+    public User(String email, String password, String firstName, String lastName, String telephone, Boolean isAdmin) {
         this.email = email;
-        this.passwordHash = passwordHash;
+        this.password = password; // store hashed value
         this.firstName = firstName;
         this.lastName = lastName;
         this.telephone = telephone;
-        this.isAdmin = isAdmin;
+        this.isAdmin = isAdmin != null ? isAdmin : false;
     }
 
-    // ===== Getters and Setters =====
     public Long getUserId() { return userId; }
     public void setUserId(Long userId) { this.userId = userId; }
 
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
 
-    public String getPasswordHash() { return passwordHash; }
-    public void setPasswordHash(String passwordHash) { this.passwordHash = passwordHash; }
+    // hashed password
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
 
     public String getFirstName() { return firstName; }
     public void setFirstName(String firstName) { this.firstName = firstName; }

@@ -7,7 +7,7 @@ USE moffat_lodge;
 CREATE TABLE `user` (
   user_id       BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   email         VARCHAR(254)    NOT NULL UNIQUE,
-  password_hash CHAR(60)        NOT NULL,
+  password CHAR(60)        NOT NULL,
   first_name    VARCHAR(100)    NOT NULL,
   last_name     VARCHAR(100)    NOT NULL,
   telephone     VARCHAR(25)     NOT NULL,
