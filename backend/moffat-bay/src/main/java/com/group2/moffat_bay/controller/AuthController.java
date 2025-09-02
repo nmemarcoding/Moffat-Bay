@@ -5,6 +5,8 @@ import com.group2.moffat_bay.dto.UserDto;
 import com.group2.moffat_bay.model.User;
 import com.group2.moffat_bay.service.UserService;
 import com.group2.moffat_bay.util.JwtUtil;
+
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -72,6 +74,17 @@ public class AuthController {
 
         } catch (Exception e) {
             return ResponseEntity.internalServerError().body("Login failed: " + e.getMessage());
+        }
+    }
+
+    @PostMapping("/check-token")
+    public ResponseEntity<?> checkToken(HttpServletRequest request) {
+        try {
+            jwtUtil.requireValidToken(request); // throws 401 if invalid/missing
+            String email = jwtUtil.extractEmailFromRequest(request);
+            return ResponseEntity.ok("Token is valid for user: " + email);
+        } catch (Exception e) {
+            return ResponseEntity.status(401).body("Invalid or expired token");
         }
     }
 }
