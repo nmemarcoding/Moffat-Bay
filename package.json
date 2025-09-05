@@ -1,0 +1,5 @@
+{
+  "devDependencies": {
+    "babel-plugin-react-compiler": "^19.1.0-rc.3"
+  }
+}
