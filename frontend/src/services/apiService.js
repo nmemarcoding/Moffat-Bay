@@ -11,7 +11,7 @@ const USER_INFO_KEY = 'userInfo';
 /* ---------- Storage Helpers ---------- */
 
 const getToken = () => localStorage.getItem(TOKEN_KEY);
-const setToken = (t) => localStorage.setItem(TOKEN_KEY, t);
+const setToken = t => localStorage.setItem(TOKEN_KEY, t);
 const clearToken = () => localStorage.removeItem(TOKEN_KEY);
 
 const safeDispatchAuthEvent = () => {
@@ -22,7 +22,7 @@ const safeDispatchAuthEvent = () => {
   }
 };
 
-const setUserInfo = (u) => {
+const setUserInfo = u => {
   localStorage.setItem(USER_INFO_KEY, JSON.stringify(u));
   safeDispatchAuthEvent();
 };
@@ -44,7 +44,7 @@ const api = axios.create({ baseURL: BASE_URL });
 
 // Attach token
 api.interceptors.request.use(
-  (config) => {
+  config => {
     const token = getToken();
     if (token) {
       const hasBearer = token.toLowerCase().startsWith('bearer ');
@@ -52,12 +52,12 @@ api.interceptors.request.use(
     }
     return config;
   },
-  (error) => Promise.reject(error)
+  error => Promise.reject(error)
 );
 
 // Capture refreshed token; store user on /login or /register
 api.interceptors.response.use(
-  (response) => {
+  response => {
     // axios lowercases header keys; also support exact-case for safety
     const newToken =
       response.headers?.authorization ||
@@ -73,7 +73,7 @@ api.interceptors.response.use(
 
     return response;
   },
-  (error) => {
+  error => {
     if (error?.response?.status === 401) {
       console.log('401 from API, logging out');
       logout();
@@ -84,11 +84,11 @@ api.interceptors.response.use(
 
 /* ---------- API Calls (matching your model) ---------- */
 
-export const register = (payload) =>
+export const register = payload =>
   // { email, password, firstName, lastName, telephone, isAdmin }
   api.post('/register', payload);
 
-export const login = (payload) =>
+export const login = payload =>
   // { email, password }
   api.post('/login', payload);
 
@@ -110,5 +110,15 @@ export const validateToken = async () => {
     return false;
   }
 };
+
+// Landing page API calls
+export const getRooms = () => api.get('/rooms');
+
+export const submitContactForm = contactData =>
+  api.post('/landing/contact', contactData);
+
+export const getLandingInfo = () => api.get('/landing/info');
+
+export const getHotelStats = () => api.get('/landing/stats');
 
 export default api;
