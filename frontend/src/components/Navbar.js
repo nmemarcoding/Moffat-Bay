@@ -6,9 +6,9 @@ import { logout } from '../services/apiService';
 
 const NAV_LINKS = [
   { to: '/', label: 'Home' },
-  { to: '/attractions', label: 'Attractions' },
-  { to: '/reservations', label: 'Reservations' },
-  { to: '/about', label: 'About Us' },
+  { to: '/#rooms', label: 'Rooms' },
+  { to: '/availability', label: 'Availability' },
+  { to: '/#about', label: 'About Us' },
 ];
 
 const USER_INFO_KEY = 'userInfo';
@@ -79,9 +79,23 @@ const Navbar = () => {
           <ul className="hidden md:flex list-none gap-5 text-sm font-semibold">
             {NAV_LINKS.map((l) => (
               <li key={l.to}>
-                <Link className="text-slate-800/80 hover:text-indigo-600 transition-colors" to={l.to}>
-                  {l.label}
-                </Link>
+                {l.to.startsWith('/#') ? (
+                  <a
+                    href={l.to}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      closeMenu();
+                      window.location.assign(l.to);
+                    }}
+                    className="text-slate-800/80 hover:text-indigo-600 transition-colors"
+                  >
+                    {l.label}
+                  </a>
+                ) : (
+                  <Link className="text-slate-800/80 hover:text-indigo-600 transition-colors" to={l.to}>
+                    {l.label}
+                  </Link>
+                )}
               </li>
             ))}
           </ul>
@@ -157,9 +171,22 @@ const Navbar = () => {
         >
           {NAV_LINKS.map((l) => (
             <li key={l.to}>
-              <Link onClick={closeMenu} className="block text-slate-800/80 hover:text-indigo-600" to={l.to}>
-                {l.label}
-              </Link>
+              {l.to.startsWith('/#') ? (
+                <a
+                  onClick={() => {
+                    closeMenu();
+                    window.location.assign(l.to);
+                  }}
+                  className="block text-slate-800/80 hover:text-indigo-600"
+                  href={l.to}
+                >
+                  {l.label}
+                </a>
+              ) : (
+                <Link onClick={closeMenu} className="block text-slate-800/80 hover:text-indigo-600" to={l.to}>
+                  {l.label}
+                </Link>
+              )}
             </li>
           ))}
 

@@ -2,6 +2,7 @@ package com.group2.moffat_bay.model;
 
 import jakarta.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "user")
@@ -30,6 +31,9 @@ public class User implements Serializable {
 
     @Column(name = "is_admin", nullable = false)
     private Boolean isAdmin = false;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Reservation> reservations;
 
     public User() {}
 
@@ -63,4 +67,7 @@ public class User implements Serializable {
 
     public Boolean getIsAdmin() { return isAdmin; }
     public void setIsAdmin(Boolean isAdmin) { this.isAdmin = isAdmin; }
+
+    public List<Reservation> getReservations() { return reservations; }
+    public void setReservations(List<Reservation> reservations) { this.reservations = reservations; }
 }

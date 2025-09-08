@@ -92,6 +92,16 @@ export const login = payload =>
   // { email, password }
   api.post('/login', payload);
 
+export const getAvailableRooms = (checkIn, checkOut, guests) => {
+  return api.get('/rooms/available', {
+    params: { checkIn, checkOut, guests }
+  });
+};
+
+export const createReservation = reservationData =>
+  api.post('/reservations', reservationData);
+
+
 // Validate token via backend endpoint
 export const validateToken = async () => {
   const token = getToken();

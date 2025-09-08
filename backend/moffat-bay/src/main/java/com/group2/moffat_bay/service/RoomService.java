@@ -5,6 +5,7 @@ import com.group2.moffat_bay.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,4 +54,9 @@ public class RoomService {
     public boolean roomNumberExists(String roomNumber) {
         return roomRepository.findByRoomNumber(roomNumber) != null;
     }
+
+    public List<Room> getAvailableRooms(LocalDate checkIn, LocalDate checkOut, Integer guests) {
+        return roomRepository.findAvailableRooms(checkIn, checkOut, guests);
+    }
+
 }

@@ -3,6 +3,7 @@ package com.group2.moffat_bay.model;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name = "room")
@@ -24,6 +25,9 @@ public class Room implements Serializable {
 
     @Column(name = "max_guests", nullable = false)
     private Integer maxGuests;
+
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Reservation> reservations;
 
     public Room() {}
 
@@ -48,4 +52,7 @@ public class Room implements Serializable {
 
     public Integer getMaxGuests() { return maxGuests; }
     public void setMaxGuests(Integer maxGuests) { this.maxGuests = maxGuests; }
+
+    public List<Reservation> getReservations() { return reservations; }
+    public void setReservations(List<Reservation> reservations) { this.reservations = reservations; }
 }
