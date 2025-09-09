@@ -11,6 +11,16 @@ export default function AvailabilityPage() {
   const [rooms, setRooms] = useState([]);
   const navigate = useNavigate();
 
+  //helpers to enforce min dates 
+  const todayStr = new Date().toISOString().split('T')[0];
+  const nextDayStr = (dateStr) => {
+    const d = new Date(dateStr);
+    d.setDate(d.getDate() + 1);
+    return d.toISOString().split('T')[0];
+  };
+  const checkoutMin = checkIn ? nextDayStr(checkIn) : nextDayStr(todayStr);
+  // -----------------------------------------------------------------------------------
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -34,11 +44,25 @@ export default function AvailabilityPage() {
             <form className="grid gap-4 bg-white border border-gray-200 rounded-xl p-6 shadow-md mt-6 md:grid-cols-2 lg:grid-cols-5 lg:items-end" onSubmit={handleSubmit}>
               <label className="flex flex-col gap-1">
                 <span className="text-sm font-bold text-slate-500">Check In</span>
-                <input className="w-full px-4 py-3 rounded-lg border border-gray-300 bg-slate-50" type="date" value={checkIn} onChange={e => setCheckIn(e.target.value)} required />
+                <input
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 bg-slate-50"
+                  type="date"
+                  value={checkIn}
+                  onChange={e => setCheckIn(e.target.value)}
+                  required
+                  min={todayStr}              
+                />
               </label>
               <label className="flex flex-col gap-1">
                 <span className="text-sm font-bold text-slate-500">Check Out</span>
-                <input className="w-full px-4 py-3 rounded-lg border border-gray-300 bg-slate-50" type="date" value={checkOut} onChange={e => setCheckOut(e.target.value)} required />
+                <input
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 bg-slate-50"
+                  type="date"
+                  value={checkOut}
+                  onChange={e => setCheckOut(e.target.value)}
+                  required
+                  min={checkoutMin}           
+                />
               </label>
               <label className="flex flex-col gap-1">
                 <span className="text-sm font-bold text-slate-500">Guests</span>
