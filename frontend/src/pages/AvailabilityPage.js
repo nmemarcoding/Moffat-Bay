@@ -83,8 +83,9 @@ export default function AvailabilityPage() {
                   <div className="h-[180px] bg-gradient-to-r from-indigo-200 to-sky-200 flex items-center justify-center font-bold">IMAGE</div>
                   <div className="p-5">
                     <div className="text-slate-500 text-sm font-bold tracking-wide">Up to {room.maxGuests} Guest{room.maxGuests > 1 ? 's' : ''}</div>
+                    <div className="text-sm text-slate-600 font-semibold mt-1">Room {room.roomNumber}</div>
                     <div className="text-blue-700 font-extrabold text-lg mt-1">{room.bedType} Room</div>
-                    <div className="font-bold mt-1">${room.pricePerNight.toFixed(2)} / night</div>
+                    <div className="font-bold mt-1">${room.pricePerNight ? room.pricePerNight.toFixed(2) : '—'} / night</div>
                     <button
                       className="inline-block mt-3 px-4 py-2 rounded-lg bg-gradient-to-r from-sky-400 to-blue-600 text-white font-extrabold shadow"
                       onClick={() => navigate('/booking-details', {
