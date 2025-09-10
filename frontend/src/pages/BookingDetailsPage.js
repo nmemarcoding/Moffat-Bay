@@ -9,6 +9,19 @@ export default function BookingDetailsPage() {
   const navigate = useNavigate();
   const { room, checkIn, checkOut, guests } = location.state || {};
 
+  const nights = (() => {
+    if (!checkIn || !checkOut) return 0;
+    const inD = new Date(checkIn);
+    const outD = new Date(checkOut);
+    if (isNaN(inD) || isNaN(outD)) return 0;
+    const diff = Math.round((outD - inD) / (1000 * 60 * 60 * 24));
+    return diff > 0 ? diff : 0;
+  })();
+
+  const pricePerNight = Number(room?.pricePerNight) || 0;
+  const totalPrice = (pricePerNight * nights).toFixed(2);
+  const pricePerNightFormatted = pricePerNight ? pricePerNight.toFixed(2) : '—';
+
   const handleConfirm = async () => {
     if (!room || !checkIn || !checkOut || !guests) {
       alert('Missing booking details. Please return to the availability page.');
@@ -67,9 +80,19 @@ export default function BookingDetailsPage() {
 
               <div className="bg-white border border-gray-200 rounded-xl shadow-md p-6">
                 <h3 className="text-xl font-extrabold text-blue-700 mb-1">{room?.bedType} Room</h3>
+                {room?.roomNumber && (
+                  <div className="text-sm text-slate-600 font-semibold mb-1">Room {room.roomNumber}</div>
+                )}
                 <p className="text-slate-500 font-bold">{checkIn} – {checkOut}</p>
                 <p className="text-slate-500">{guests} Guest{guests > 1 ? 's' : ''}</p>
-                <p className="text-2xl font-extrabold mt-2">${(room?.pricePerNight * ((new Date(checkOut) - new Date(checkIn)) / (1000 * 60 * 60 * 24))).toFixed(2)}</p>
+                <p className="text-2xl font-extrabold mt-2">
+                  ${totalPrice}
+                  {nights > 0 && (
+                    <span className="text-sm font-medium text-slate-500"> {' '}
+                      ({nights} night{nights > 1 ? 's' : ''} @ ${pricePerNightFormatted}/night)
+                    </span>
+                  )}
+                </p>
 
                 <div className="flex gap-3 mt-4">
                   <button

@@ -17,8 +17,16 @@ export default function ConfirmationPage() {
 
   if (!reservation) return null;
 
-  const nights = Math.max(1, (new Date(reservation.checkOut) - new Date(reservation.checkIn)) / (1000 * 60 * 60 * 24));
-  const total = room ? (room.pricePerNight * nights).toFixed(2) : '—';
+  const nights = (() => {
+    const inD = new Date(reservation.checkIn);
+    const outD = new Date(reservation.checkOut);
+    if (isNaN(inD) || isNaN(outD)) return 1;
+    const diff = Math.round((outD - inD) / (1000 * 60 * 60 * 24));
+    return diff > 0 ? diff : 1;
+  })();
+
+  const pricePerNight = Number(room?.pricePerNight) || 0;
+  const total = pricePerNight ? (pricePerNight * nights).toFixed(2) : '—';
 
   return (
     <>
@@ -35,7 +43,8 @@ export default function ConfirmationPage() {
                   <h3 className="text-lg font-bold text-slate-700">Reservation Details</h3>
                   <div className="mt-2 text-slate-600">
                     <div><strong>Confirmation ID:</strong> {reservation.reservationId}</div>
-                    <div><strong>Room:</strong> {room?.bedType ?? reservation.roomId}</div>
+                    <div><strong>Room Number:</strong> {room?.roomNumber ?? '—'}</div>
+                    <div><strong>Room Type:</strong> {room?.bedType ?? '—'}</div>
                     <div><strong>Check In:</strong> {reservation.checkIn}</div>
                     <div><strong>Check Out:</strong> {reservation.checkOut}</div>
                     <div><strong>Guests:</strong> {reservation.guests}</div>
@@ -46,7 +55,7 @@ export default function ConfirmationPage() {
                   <h3 className="text-lg font-bold text-slate-700">Payment & Pricing</h3>
                   <div className="mt-2 text-slate-600">
                     <div><strong>Nights:</strong> {nights}</div>
-                    <div><strong>Price per night:</strong> {room ? `$${room.pricePerNight.toFixed(2)}` : '—'}</div>
+                    <div><strong>Price per night:</strong> {room ? (room.pricePerNight ? `$${room.pricePerNight.toFixed(2)}` : '—') : '—'}</div>
                     <div className="text-2xl font-extrabold mt-3">Total: ${total}</div>
                   </div>
                 </div>
