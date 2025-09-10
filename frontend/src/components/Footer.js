@@ -16,16 +16,16 @@ const Footer = () => (
       <div>
         <h4 className="font-semibold mb-2">Learn More</h4>
         <ul className="space-y-2 text-sm">
-          <li><Link className="text-blue-700 hover:underline" to="/about">About Us</Link></li>
-          <li><Link className="text-blue-700 hover:underline" to="/attractions">Attractions</Link></li>
-          <li><Link className="text-blue-700 hover:underline" to="/reservations">Accommodations</Link></li>
+          <li><Link className="text-blue-700 hover:underline" to="/#about">About Us</Link></li>
+          <li><Link className="text-blue-700 hover:underline" to="/#rooms">Rooms</Link></li>
+          <li><Link className="text-blue-700 hover:underline" to="/availability">Accommodations</Link></li>
         </ul>
       </div>
       <div>
         <h4 className="font-semibold mb-2">Useful</h4>
         <ul className="space-y-2 text-sm">
           <li><Link className="text-blue-700 hover:underline" to="/">Home</Link></li>
-          <li><Link className="text-blue-700 hover:underline" to="/reservations">Reservations</Link></li>
+          <li><Link className="text-blue-700 hover:underline" to="/availability">Reservations</Link></li>
           <li><Link className="text-blue-700 hover:underline" to="/login">Login</Link></li>
         </ul>
       </div>
