@@ -1,14 +1,12 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { logout } from '../services/apiService';
-
-
 
 const NAV_LINKS = [
   { to: '/', label: 'Home' },
   { to: '/#rooms', label: 'Rooms' },
   { to: '/availability', label: 'Availability' },
-  { to: '/#about', label: 'About Us' },
+  { to: '/about', label: 'About Us' },
 ];
 
 const USER_INFO_KEY = 'userInfo';
@@ -21,8 +19,6 @@ const readUser = () => {
     return null;
   }
 };
-
-
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -56,7 +52,7 @@ const Navbar = () => {
     navigate('/login');
   }, [navigate]);
 
-  const toggleMenu = useCallback(() => setOpen((o) => !o), []);
+  const toggleMenu = useCallback(() => setOpen(o => !o), []);
   const closeMenu = useCallback(() => setOpen(false), []);
 
   const displayName = useMemo(
@@ -77,12 +73,12 @@ const Navbar = () => {
 
         <div className="flex items-center gap-4">
           <ul className="hidden md:flex list-none gap-5 text-sm font-semibold">
-            {NAV_LINKS.map((l) => (
+            {NAV_LINKS.map(l => (
               <li key={l.to}>
                 {l.to.startsWith('/#') ? (
                   <a
                     href={l.to}
-                    onClick={(e) => {
+                    onClick={e => {
                       e.preventDefault();
                       closeMenu();
                       window.location.assign(l.to);
@@ -92,7 +88,10 @@ const Navbar = () => {
                     {l.label}
                   </a>
                 ) : (
-                  <Link className="text-slate-800/80 hover:text-indigo-600 transition-colors" to={l.to}>
+                  <Link
+                    className="text-slate-800/80 hover:text-indigo-600 transition-colors"
+                    to={l.to}
+                  >
                     {l.label}
                   </Link>
                 )}
@@ -169,7 +168,7 @@ const Navbar = () => {
             open ? 'p-6 opacity-100' : 'p-0 opacity-0'
           }`}
         >
-          {NAV_LINKS.map((l) => (
+          {NAV_LINKS.map(l => (
             <li key={l.to}>
               {l.to.startsWith('/#') ? (
                 <a
@@ -183,7 +182,11 @@ const Navbar = () => {
                   {l.label}
                 </a>
               ) : (
-                <Link onClick={closeMenu} className="block text-slate-800/80 hover:text-indigo-600" to={l.to}>
+                <Link
+                  onClick={closeMenu}
+                  className="block text-slate-800/80 hover:text-indigo-600"
+                  to={l.to}
+                >
                   {l.label}
                 </Link>
               )}
@@ -194,7 +197,8 @@ const Navbar = () => {
             <li className="pt-2 border-t border-slate-200">
               <div className="flex flex-col gap-3">
                 <span className="text-slate-700 text-sm">
-                  Signed in as <span className="font-semibold">{displayName}</span>
+                  Signed in as{' '}
+                  <span className="font-semibold">{displayName}</span>
                 </span>
                 <button
                   onClick={() => {

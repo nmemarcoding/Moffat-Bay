@@ -1,12 +1,13 @@
 import React from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import './App.css';
-import LandingPage from './pages/LandingPage';
-import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage';
+import AboutUs from './pages/AboutUs';
 import AvailabilityPage from './pages/AvailabilityPage';
 import BookingDetailsPage from './pages/BookingDetailsPage';
 import ConfirmationPage from './pages/ConfirmationPage';
+import LandingPage from './pages/LandingPage';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/availability" element={<AvailabilityPage />} />{' '}
         <Route path="/booking-details" element={<BookingDetailsPage />} />{' '}
         <Route path="/confirmation" element={<ConfirmationPage />} />{' '}
+        <Route path="/about" element={<AboutUs />} />{' '}
       </Routes>{' '}
     </Router>
   );
