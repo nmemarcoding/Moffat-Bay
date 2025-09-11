@@ -101,7 +101,8 @@ export const getAvailableRooms = (checkIn, checkOut, guests) => {
 export const createReservation = reservationData =>
   api.post('/reservations', reservationData);
 
-
+// Fetch reservations for the currently authenticated user
+export const getMyReservations = () => api.get('/reservations/me');
 // Validate token via backend endpoint
 export const validateToken = async () => {
   const token = getToken();
