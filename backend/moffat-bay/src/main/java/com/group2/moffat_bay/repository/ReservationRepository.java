@@ -17,4 +17,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
     List<Reservation> findConflictingReservations(@Param("roomId") Integer roomId,
                                                    @Param("checkIn") LocalDate checkIn,
                                                    @Param("checkOut") LocalDate checkOut);
+
+    // Find all reservations belonging to a user id
+    List<Reservation> findByUserId(Long userId);
 }

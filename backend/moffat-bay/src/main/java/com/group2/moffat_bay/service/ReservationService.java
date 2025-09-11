@@ -90,4 +90,13 @@ public class ReservationService {
         return reservationRepository.findById(reservationId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Reservation not found"));
     }
+
+    public List<Reservation> getReservationsByUserEmail(String userEmail) {
+        Optional<User> userOpt = userRepository.findByEmail(userEmail);
+        if (!userOpt.isPresent()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+        }
+        User user = userOpt.get();
+        return reservationRepository.findByUserId(user.getUserId());
+    }
 }

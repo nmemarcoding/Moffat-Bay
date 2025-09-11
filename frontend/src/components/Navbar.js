@@ -102,6 +102,12 @@ const Navbar = () => {
           <div className="hidden md:flex items-center gap-3">
             {user ? (
               <>
+                <Link
+                  to="/my-reservations"
+                  className="text-sm font-semibold text-slate-700 hover:text-indigo-600 transition"
+                >
+                  My Reservations
+                </Link>
                 <span className="text-sm font-medium text-slate-700">
                   Hi, {displayName}
                 </span>
@@ -196,6 +202,15 @@ const Navbar = () => {
           {user ? (
             <li className="pt-2 border-t border-slate-200">
               <div className="flex flex-col gap-3">
+                <Link
+                  onClick={() => {
+                    closeMenu();
+                  }}
+                  className="text-sm font-semibold text-slate-700 hover:text-indigo-600"
+                  to="/my-reservations"
+                >
+                  My Reservations
+                </Link>
                 <span className="text-slate-700 text-sm">
                   Signed in as{' '}
                   <span className="font-semibold">{displayName}</span>

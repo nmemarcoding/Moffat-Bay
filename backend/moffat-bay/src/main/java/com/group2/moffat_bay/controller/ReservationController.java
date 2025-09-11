@@ -2,66 +2,76 @@ package com.group2.moffat_bay.controller;
 
 import com.group2.moffat_bay.dto.ReservationCreateDto;
 import com.group2.moffat_bay.model.Reservation;
+import com.group2.moffat_bay.dto.ReservationDto;
+import com.group2.moffat_bay.model.User;
+import com.group2.moffat_bay.repository.UserRepository;
 import com.group2.moffat_bay.service.ReservationService;
 import com.group2.moffat_bay.util.JwtUtil;
-import com.group2.moffat_bay.repository.UserRepository;
-import com.group2.moffat_bay.model.User;
+
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import jakarta.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/reservations")
 public class ReservationController {
 
-    @Autowired
-    private ReservationService reservationService;
+    private final ReservationService reservationService;
+    private final JwtUtil jwtUtil;
+    private final UserRepository userRepository;
 
     @Autowired
-    private JwtUtil jwtUtil;
+    public ReservationController(ReservationService reservationService,
+                                 JwtUtil jwtUtil,
+                                 UserRepository userRepository) {
+        this.reservationService = reservationService;
+        this.jwtUtil = jwtUtil;
+        this.userRepository = userRepository;
+    }
 
-    @Autowired
-    private UserRepository userRepository;
-
+    /**
+     * Create a new reservation for the currently logged-in user.
+     */
     @PostMapping
-    public ResponseEntity<?> createReservation(@RequestBody ReservationCreateDto reservationDto, 
-                                               HttpServletRequest request) {
-        
-        // Validate token and get user email
+    public ResponseEntity<Reservation> createReservation(
+            @RequestBody ReservationCreateDto reservationDto,
+            HttpServletRequest request) {
+
         jwtUtil.requireValidToken(request);
         String userEmail = jwtUtil.extractEmailFromRequest(request);
-        
         if (userEmail == null) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid token");
         }
 
-        // Use service to create reservation
         Reservation savedReservation = reservationService.createReservation(userEmail, reservationDto);
-        
         return ResponseEntity.status(HttpStatus.CREATED).body(savedReservation);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getReservationById(@PathVariable("id") Long id, HttpServletRequest request) {
-        // Ensure token valid and get requester email
+    /**
+     * Fetch a specific reservation by its numeric ID.
+     * Only the reservation owner or an admin can view it.
+     */
+    @GetMapping("/{id:[0-9]+}") // regex ensures only numbers match this route
+    public ResponseEntity<Reservation> getReservationById(
+            @PathVariable("id") Long id,
+            HttpServletRequest request) {
+
         jwtUtil.requireValidToken(request);
         String requesterEmail = jwtUtil.extractEmailFromRequest(request);
         if (requesterEmail == null) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid token");
         }
 
-        // Find requester user
         User requester = userRepository.findByEmail(requesterEmail)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "User not found"));
 
-        // Load reservation
         Reservation reservation = reservationService.getReservationById(id);
 
-        // Allow if requester is admin or owner of reservation
         boolean isOwner = requester.getUserId().equals(reservation.getUserId());
         boolean isAdmin = Boolean.TRUE.equals(requester.getIsAdmin());
 
@@ -72,5 +82,38 @@ public class ReservationController {
         return ResponseEntity.ok(reservation);
     }
 
+    /**
+     * Fetch all reservations for the currently logged-in user.
+     */
+    @GetMapping("/me")
+    public ResponseEntity<List<ReservationDto>> getMyReservations(HttpServletRequest request) {
+        jwtUtil.requireValidToken(request);
+        String userEmail = jwtUtil.extractEmailFromRequest(request);
+        if (userEmail == null) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid token");
+        }
 
+        List<Reservation> reservations = reservationService.getReservationsByUserEmail(userEmail);
+
+        List<ReservationDto> dtos = reservations.stream().map(r -> {
+            ReservationDto d = new ReservationDto();
+            d.setReservationId(r.getReservationId());
+            d.setRoomId(r.getRoomId());
+            if (r.getRoom() != null) {
+                // roomNumber may be Integer in model; toString for safety
+                try {
+                    d.setRoomNumber(r.getRoom().getRoomNumber() != null ? r.getRoom().getRoomNumber().toString() : null);
+                } catch (Exception ex) {
+                    d.setRoomNumber(null);
+                }
+                d.setBedType(r.getRoom().getBedType());
+            }
+            d.setGuests(r.getGuests());
+            d.setCheckIn(r.getCheckIn());
+            d.setCheckOut(r.getCheckOut());
+            return d;
+        }).toList();
+
+        return ResponseEntity.ok(dtos);
+    }
 }
