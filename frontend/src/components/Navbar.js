@@ -7,6 +7,7 @@ const NAV_LINKS = [
   { to: '/#rooms', label: 'Rooms' },
   { to: '/availability', label: 'Availability' },
   { to: '/about', label: 'About Us' },
+  { to: '/contact', label: 'Contact Us' }, 
 ];
 
 const USER_INFO_KEY = 'userInfo';
