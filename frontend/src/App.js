@@ -9,6 +9,7 @@ import MyReservationsPage from './pages/MyReservationsPage';
 import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
+import ContactUsPage from './pages/ContactUsPage';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Route path="/booking-details" element={<BookingDetailsPage />} />
         <Route path="/confirmation" element={<ConfirmationPage />} />
         <Route path="/my-reservations" element={<MyReservationsPage />} />
+        <Route path="/contact" element={<ContactUsPage />} />
         <Route path="/about" element={<AboutUs />} />
       </Routes>
     </Router>
