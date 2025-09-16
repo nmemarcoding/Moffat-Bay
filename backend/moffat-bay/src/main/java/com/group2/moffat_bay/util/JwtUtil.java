@@ -130,6 +130,34 @@ public class JwtUtil {
         return token == null ? null : extractSubject(token);
     }
 
+    /**
+     * Return true if the token in the request has the `admin` claim set.
+     * Returns false when token is missing, invalid, or the claim is not truthy.
+     */
+    public boolean isAdminFromRequest(HttpServletRequest request) {
+        String token = extractToken(request);
+        if (token == null) return false;
+        Object adminClaim = extractClaim(token, "admin");
+        if (adminClaim == null) return false;
+        if (adminClaim instanceof Boolean) return (Boolean) adminClaim;
+        if (adminClaim instanceof String) return Boolean.parseBoolean((String) adminClaim);
+        if (adminClaim instanceof Number) return ((Number) adminClaim).intValue() != 0;
+        return false;
+    }
+
+    /**
+     * Guard method: require admin; throws 403 if present but not admin, 401 if token invalid/missing.
+     */
+    public void requireAdmin(HttpServletRequest request) {
+        // ensure token present and valid
+        if (!validateTokenFromHeader(request)) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Token not valid");
+        }
+        if (!isAdminFromRequest(request)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Admin privileges required");
+        }
+    }
+
     // ---- internal helpers ----
     private Jws<Claims> parseClaimsJws(String token) {
         return Jwts.parserBuilder()
