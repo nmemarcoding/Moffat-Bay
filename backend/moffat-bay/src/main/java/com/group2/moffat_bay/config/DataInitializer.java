@@ -8,7 +8,10 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import com.group2.moffat_bay.model.Room;
+import com.group2.moffat_bay.model.User;
 import com.group2.moffat_bay.repository.RoomRepository;
+import com.group2.moffat_bay.repository.UserRepository;
+import com.group2.moffat_bay.service.UserService;
 
 @Component
 public class DataInitializer implements CommandLineRunner {
@@ -16,11 +19,37 @@ public class DataInitializer implements CommandLineRunner {
     @Autowired
     private RoomRepository roomRepository;
 
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private UserRepository userRepository;
+
     @Override
     public void run(String... args) throws Exception {
         // Only initialize if no rooms exist
         if (roomRepository.count() == 0) {
             initializeRooms();
+        }
+
+        // Create default admin user if it doesn't already exist
+        final String adminEmail = "admin@moffatbay.com";
+        final String adminPassword = "Admin@1234"; // raw password; will be hashed by UserService
+        if (!userRepository.existsByEmail(adminEmail)) {
+            User admin = new User(
+                adminEmail,
+                adminPassword,
+                "Admin",
+                "User",
+                "000-000-0000",
+                true
+            );
+            try {
+                userService.register(admin);
+                System.out.println("Admin user created: " + adminEmail + " (password: " + adminPassword + ")");
+            } catch (Exception e) {
+                System.err.println("Failed to create admin user: " + e.getMessage());
+            }
         }
     }
 
