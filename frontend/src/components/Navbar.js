@@ -109,6 +109,14 @@ const Navbar = () => {
                 >
                   My Reservations
                 </Link>
+                {user?.isAdmin && (
+                  <Link
+                    to="/admin/search"
+                    className="text-sm font-semibold text-slate-700 hover:text-indigo-600 transition ml-4"
+                  >
+                    Admin Search
+                  </Link>
+                )}
                 <span className="text-sm font-medium text-slate-700">
                   Hi, {displayName}
                 </span>

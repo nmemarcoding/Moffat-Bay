@@ -10,6 +10,7 @@ import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import ContactUsPage from './pages/ContactUsPage';
+import AdminSearchPage from './pages/AdminSearchPage';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/confirmation" element={<ConfirmationPage />} />
         <Route path="/my-reservations" element={<MyReservationsPage />} />
         <Route path="/contact" element={<ContactUsPage />} />
+        <Route path="/admin/search" element={<AdminSearchPage />} />
         <Route path="/about" element={<AboutUs />} />
       </Routes>
     </Router>

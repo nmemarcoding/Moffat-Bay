@@ -116,4 +116,53 @@ public class ReservationController {
 
         return ResponseEntity.ok(dtos);
     }
+
+    /**
+     * Admin-only: search reservations by user email or telephone.
+     * Query params: `email` or `phone` (phone takes precedence if provided).
+     */
+    @GetMapping("/admin/search")
+    public ResponseEntity<List<ReservationDto>> adminSearchReservations(
+            @RequestParam(value = "email", required = false) String email,
+            @RequestParam(value = "phone", required = false) String phone,
+            HttpServletRequest request) {
+
+        // Require admin privileges
+        jwtUtil.requireAdmin(request);
+
+        if ((email == null || email.isBlank()) && (phone == null || phone.isBlank())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Provide email or phone to search");
+        }
+
+        List<Reservation> reservations;
+        if (phone != null && !phone.isBlank()) {
+            var userOpt = userRepository.findByTelephone(phone);
+            if (userOpt.isEmpty()) {
+                return ResponseEntity.ok(List.of());
+            }
+            reservations = reservationService.getReservationsByUserEmail(userOpt.get().getEmail());
+        } else {
+            reservations = reservationService.getReservationsByUserEmail(email);
+        }
+
+        List<ReservationDto> dtos = reservations.stream().map(r -> {
+            ReservationDto d = new ReservationDto();
+            d.setReservationId(r.getReservationId());
+            d.setRoomId(r.getRoomId());
+            if (r.getRoom() != null) {
+                try {
+                    d.setRoomNumber(r.getRoom().getRoomNumber() != null ? r.getRoom().getRoomNumber().toString() : null);
+                } catch (Exception ex) {
+                    d.setRoomNumber(null);
+                }
+                d.setBedType(r.getRoom().getBedType());
+            }
+            d.setGuests(r.getGuests());
+            d.setCheckIn(r.getCheckIn());
+            d.setCheckOut(r.getCheckOut());
+            return d;
+        }).toList();
+
+        return ResponseEntity.ok(dtos);
+    }
 }
