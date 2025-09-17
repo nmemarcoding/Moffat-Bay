@@ -58,7 +58,6 @@ api.interceptors.request.use(
 // Capture refreshed token; store user on /login or /register
 api.interceptors.response.use(
   response => {
-    // axios lowercases header keys; also support exact-case for safety
     const newToken =
       response.headers?.authorization ||
       response.headers?.Authorization ||
@@ -103,6 +102,7 @@ export const createReservation = reservationData =>
 
 // Fetch reservations for the currently authenticated user
 export const getMyReservations = () => api.get('/reservations/me');
+
 // Validate token via backend endpoint
 export const validateToken = async () => {
   const token = getToken();
@@ -125,11 +125,27 @@ export const validateToken = async () => {
 // Landing page API calls
 export const getRooms = () => api.get('/rooms');
 
-export const submitContactForm = contactData =>
-  api.post('/landing/contact', contactData);
+/**
+ * Submit Contact form
+ * Expected payload keys: { name, email, phone, subject, message }
+ * Controller supports /api/contact (and /api/landing/contact), we standardize on /contact.
+ */
+export const submitContactForm = async (contactData) => {
+  try {
+    const res = await api.post('/contact', contactData);
+    return res.data;
+  } catch (err) {
+    const msg =
+      err?.response?.data
+        ? (typeof err.response.data === 'string'
+            ? err.response.data
+            : JSON.stringify(err.response.data))
+        : err.message;
+    throw new Error(`Contact submit failed: ${msg}`);
+  }
+};
 
 export const getLandingInfo = () => api.get('/landing/info');
-
 export const getHotelStats = () => api.get('/landing/stats');
 
 export default api;

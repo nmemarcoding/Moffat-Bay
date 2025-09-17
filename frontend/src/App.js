@@ -9,6 +9,7 @@ import MyReservationsPage from './pages/MyReservationsPage';
 import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
+import ContactUsPage from './pages/ContactUsPage';
 import AdminSearchPage from './pages/AdminSearchPage';
 
 function App() {
@@ -22,7 +23,8 @@ function App() {
         <Route path="/booking-details" element={<BookingDetailsPage />} />
         <Route path="/confirmation" element={<ConfirmationPage />} />
         <Route path="/my-reservations" element={<MyReservationsPage />} />
-  <Route path="/admin/search" element={<AdminSearchPage />} />
+        <Route path="/contact" element={<ContactUsPage />} />
+        <Route path="/admin/search" element={<AdminSearchPage />} />
         <Route path="/about" element={<AboutUs />} />
       </Routes>
     </Router>
