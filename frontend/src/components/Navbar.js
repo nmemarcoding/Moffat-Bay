@@ -7,6 +7,7 @@ const NAV_LINKS = [
   { to: '/#rooms', label: 'Rooms' },
   { to: '/availability', label: 'Availability' },
   { to: '/about', label: 'About Us' },
+  { to: '/contact', label: 'Contact Us' }, 
 ];
 
 const USER_INFO_KEY = 'userInfo';
@@ -108,6 +109,14 @@ const Navbar = () => {
                 >
                   My Reservations
                 </Link>
+                {user?.isAdmin && (
+                  <Link
+                    to="/admin/search"
+                    className="text-sm font-semibold text-slate-700 hover:text-indigo-600 transition ml-4"
+                  >
+                    Admin Search
+                  </Link>
+                )}
                 <span className="text-sm font-medium text-slate-700">
                   Hi, {displayName}
                 </span>
