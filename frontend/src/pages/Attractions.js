@@ -6,7 +6,7 @@ const ATTRACTIONS = [
   {
     id: 'hiking',
     title: 'Hiking',
-    img: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1400&q=80',
+  img: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1400&q=80',
     desc: 'Explore scenic trails and breathtaking views along the Pacific Northwest coast.',
     distance: '1–5 miles from the lodge',
     rates: 'Free',
@@ -15,7 +15,7 @@ const ATTRACTIONS = [
   {
     id: 'kayaking',
     title: 'Kayaking',
-    img: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1400&q=80',
+  img: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1400&q=80',
     desc: 'Paddle across calm waters and experience the beauty of Moffat Bay up close.',
     distance: '0.5 miles from the lodge',
     rates: '$25 per hour',
@@ -24,7 +24,7 @@ const ATTRACTIONS = [
   {
     id: 'whale',
     title: 'Whale Watching',
-    img: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1400&q=80',
+  img: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1400&q=80',
     desc: 'Embark on an unforgettable journey to see orcas, humpbacks, and other marine life.',
     distance: '2 miles from the lodge',
     rates: '$75 per adult, $50 per child',
@@ -33,7 +33,7 @@ const ATTRACTIONS = [
   {
     id: 'scuba',
     title: 'Scuba Diving',
-    img: 'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1400&q=80',
+  img: 'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1400&q=80',
     desc: 'Dive beneath the surface to explore vibrant underwater ecosystems and marine habitats.',
     distance: '3 miles from the lodge',
     rates: '$120 per dive, equipment included',
