@@ -4,9 +4,9 @@ import { logout } from '../services/apiService';
 
 const NAV_LINKS = [
   { to: '/', label: 'Home' },
+  { to: '/about', label: 'About Us' },
   { to: '/attractions', label: 'Attractions' },
   { to: '/availability', label: 'Availability' },
-  { to: '/about', label: 'About Us' },
   { to: '/contact', label: 'Contact Us' },
 ];
 
