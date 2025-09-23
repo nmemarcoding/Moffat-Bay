@@ -222,12 +222,7 @@ const LandingPage = () => {
                       </span>
                       <span className="text-gray-500">per night</span>
                     </div>
-                    <Link
-                      to={`/rooms/${room.roomId}`}
-                      className="mt-4 block w-full bg-indigo-600 text-white text-center py-2 rounded-lg hover:bg-indigo-700 transition-colors"
-                    >
-                      View Details
-                    </Link>
+                  
                   </div>
                 </div>
               ))}
