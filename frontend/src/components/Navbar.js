@@ -4,10 +4,15 @@ import { logout } from '../services/apiService';
 
 const NAV_LINKS = [
   { to: '/', label: 'Home' },
-  { to: '/#rooms', label: 'Rooms' },
-  { to: '/availability', label: 'Availability' },
   { to: '/about', label: 'About Us' },
-  { to: '/contact', label: 'Contact Us' }, 
+  { to: '/attractions', label: 'Attractions' },
+  { to: '/availability', label: 'Availability' },
+  { to: '/contact', label: 'Contact Us' },
+];
+
+const ADMIN_LINKS = [
+  { to: '/', label: 'Home' },
+  { to: '/admin/search', label: 'Admin Search' },
 ];
 
 const USER_INFO_KEY = 'userInfo';
@@ -74,7 +79,7 @@ const Navbar = () => {
 
         <div className="flex items-center gap-4">
           <ul className="hidden md:flex list-none gap-5 text-sm font-semibold">
-            {NAV_LINKS.map(l => (
+            {(user?.isAdmin ? ADMIN_LINKS : NAV_LINKS).map(l => (
               <li key={l.to}>
                 {l.to.startsWith('/#') ? (
                   <a
@@ -103,29 +108,32 @@ const Navbar = () => {
           <div className="hidden md:flex items-center gap-3">
             {user ? (
               <>
-                <Link
-                  to="/my-reservations"
-                  className="text-sm font-semibold text-slate-700 hover:text-indigo-600 transition"
-                >
-                  My Reservations
-                </Link>
-                {user?.isAdmin && (
-                  <Link
-                    to="/admin/search"
-                    className="text-sm font-semibold text-slate-700 hover:text-indigo-600 transition ml-4"
-                  >
-                    Admin Search
-                  </Link>
+                <span className="text-sm font-medium text-slate-700">Hi, {displayName}</span>
+                {user?.isAdmin ? (
+                  <>
+                    <button
+                      onClick={handleLogout}
+                      className="text-xs font-semibold px-4 py-2 rounded-full bg-slate-800 text-white hover:bg-slate-700 transition ml-4"
+                    >
+                      Logout
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <Link
+                      to="/my-reservations"
+                      className="text-sm font-semibold text-slate-700 hover:text-indigo-600 transition"
+                    >
+                      My Reservations
+                    </Link>
+                    <button
+                      onClick={handleLogout}
+                      className="text-xs font-semibold px-4 py-2 rounded-full bg-slate-800 text-white hover:bg-slate-700 transition ml-4"
+                    >
+                      Logout
+                    </button>
+                  </>
                 )}
-                <span className="text-sm font-medium text-slate-700">
-                  Hi, {displayName}
-                </span>
-                <button
-                  onClick={handleLogout}
-                  className="text-xs font-semibold px-4 py-2 rounded-full bg-slate-800 text-white hover:bg-slate-700 transition"
-                >
-                  Logout
-                </button>
               </>
             ) : (
               <>
@@ -183,7 +191,7 @@ const Navbar = () => {
             open ? 'p-6 opacity-100' : 'p-0 opacity-0'
           }`}
         >
-          {NAV_LINKS.map(l => (
+          {(user?.isAdmin ? ADMIN_LINKS : NAV_LINKS).map(l => (
             <li key={l.to}>
               {l.to.startsWith('/#') ? (
                 <a

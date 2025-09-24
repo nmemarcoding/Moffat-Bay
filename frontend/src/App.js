@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import './App.css';
 import AboutUs from './pages/AboutUs';
+import Attractions from './pages/Attractions';
 import AvailabilityPage from './pages/AvailabilityPage';
 import BookingDetailsPage from './pages/BookingDetailsPage';
 import ConfirmationPage from './pages/ConfirmationPage';
@@ -24,6 +25,7 @@ function App() {
         <Route path="/confirmation" element={<ConfirmationPage />} />
         <Route path="/my-reservations" element={<MyReservationsPage />} />
         <Route path="/contact" element={<ContactUsPage />} />
+        <Route path="/attractions" element={<Attractions />} />
         <Route path="/admin/search" element={<AdminSearchPage />} />
         <Route path="/about" element={<AboutUs />} />
       </Routes>

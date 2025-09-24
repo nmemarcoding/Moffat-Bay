@@ -72,7 +72,7 @@ const LandingPage = () => {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
-                to="/rooms"
+                to="/availability"
                 className="bg-indigo-600 text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-indigo-700 transition-colors"
               >
                 Book Now
@@ -222,12 +222,7 @@ const LandingPage = () => {
                       </span>
                       <span className="text-gray-500">per night</span>
                     </div>
-                    <Link
-                      to={`/rooms/${room.roomId}`}
-                      className="mt-4 block w-full bg-indigo-600 text-white text-center py-2 rounded-lg hover:bg-indigo-700 transition-colors"
-                    >
-                      View Details
-                    </Link>
+                  
                   </div>
                 </div>
               ))}
@@ -235,10 +230,10 @@ const LandingPage = () => {
           )}
           <div className="text-center mt-12">
             <Link
-              to="/rooms"
+              to="/availability"
               className="inline-block bg-indigo-600 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:bg-indigo-700 transition-colors"
             >
-              View All Rooms
+              View Availability
             </Link>
           </div>
         </div>
