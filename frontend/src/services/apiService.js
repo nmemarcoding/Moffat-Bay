@@ -3,7 +3,7 @@ import axios from 'axios';
 
 /* ---------- Constants ---------- */
 
-const BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080/api';
+const BASE_URL = process.env.REACT_APP_API_URL || 'https://moffat-bay-mksq.onrender.com/api';
 const AUTH_HEADER = 'Authorization';
 const TOKEN_KEY = 'authToken';
 const USER_INFO_KEY = 'userInfo';
