@@ -87,4 +87,14 @@ public class AuthController {
             return ResponseEntity.status(401).body("Invalid or expired token");
         }
     }
+
+    // endpoint to check server is running
+    @GetMapping("/ping")
+    public ResponseEntity<?> ping() {
+        try {
+            return ResponseEntity.ok("Server is running");
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().body("Error pinging server: " + e.getMessage());
+        }       
+    }
 }
