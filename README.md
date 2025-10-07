@@ -293,9 +293,6 @@ Automatic token refresh and secure storage with proper cleanup on logout.
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 👥 Team
-
-Developed by Group 2 for CSD460 coursework.
 
 ## 📞 Support
 
